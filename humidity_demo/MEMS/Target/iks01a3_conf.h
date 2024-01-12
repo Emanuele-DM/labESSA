@@ -1,0 +1,68 @@
+/**
+  ******************************************************************************
+  * @file    iks01a3_conf.h
+  * @author  MEMS Software Solutions Team
+  * @brief   This file contains definitions for the MEMS components bus interfaces
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
+
+#include "stm32f4xx_hal.h"
+#include "stm32f4xx_nucleo_bus.h"
+#include "stm32f4xx_nucleo_errno.h"
+
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __IKS01A3_CONF_H__
+#define __IKS01A3_CONF_H__
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* USER CODE BEGIN 1 */
+#define USE_IKS01A3_ENV_SENSOR_HTS221_0                1U
+#define USE_IKS01A3_ENV_SENSOR_LPS22HH_0               1U
+#define USE_IKS01A3_ENV_SENSOR_STTS751_0               1U
+
+#define USE_IKS01A3_MOTION_SENSOR_LSM6DSO_0            1U
+#define USE_IKS01A3_MOTION_SENSOR_LIS2DW12_0           1U
+#define USE_IKS01A3_MOTION_SENSOR_LIS2MDL_0            1U
+/* USER CODE END 1 */
+
+#define IKS01A3_I2C_Init BSP_I2C1_Init
+#define IKS01A3_I2C_DeInit BSP_I2C1_DeInit
+#define IKS01A3_I2C_ReadReg BSP_I2C1_ReadReg
+#define IKS01A3_I2C_WriteReg BSP_I2C1_WriteReg
+#define IKS01A3_GetTick BSP_GetTick
+#define IKS01A3_Delay HAL_Delay
+
+#define BUS_IKS01A3_INSTANCE BUS_I2C1_INSTANCE
+#define BUS_IKS01A3_CLK_DISABLE() __HAL_RCC_I2C1_CLK_DISABLE()
+#define BUS_IKS01A3_CLK_ENABLE() __HAL_RCC_I2C1_CLK_ENABLE()
+#define BUS_IKS01A3_SCL_GPIO_PORT BUS_I2C1_SCL_GPIO_PORT
+#define BUS_IKS01A3_SCL_GPIO_AF BUS_I2C1_SCL_GPIO_AF
+#define BUS_IKS01A3_SCL_GPIO_CLK_ENABLE() BUS_I2C1_SCL_GPIO_CLK_ENABLE()
+#define BUS_IKS01A3_SCL_GPIO_CLK_DISABLE() BUS_I2C1_SCL_GPIO_CLK_DISABLE()
+#define BUS_IKS01A3_SCL_GPIO_PIN BUS_I2C1_SCL_GPIO_PIN
+#define BUS_IKS01A3_SDA_GPIO_PIN BUS_I2C1_SDA_GPIO_PIN
+#define BUS_IKS01A3_SDA_GPIO_CLK_DISABLE() BUS_I2C1_SDA_GPIO_CLK_DISABLE()
+#define BUS_IKS01A3_SDA_GPIO_PORT BUS_I2C1_SDA_GPIO_PORT
+#define BUS_IKS01A3_SDA_GPIO_AF BUS_I2C1_SDA_GPIO_AF
+#define BUS_IKS01A3_SDA_GPIO_CLK_ENABLE() BUS_I2C1_SDA_GPIO_CLK_ENABLE()
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __IKS01A3_CONF_H__*/
+

@@ -1,0 +1,115 @@
+14:21:26 **** Incremental Build of configuration Debug for project LAB04_1 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_UART_RxCpltCallback':
+../Core/Src/main.c:224:2: error: 'UartReady' undeclared (first use in this function)
+  224 |  UartReady = SET;
+      |  ^~~~~~~~~
+../Core/Src/main.c:224:2: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c: In function 'printWelcomeMessage':
+../Core/Src/main.c:228:46: error: 'WELCOME_MSG' undeclared (first use in this function)
+  228 |  char *strings[] = {"\033[0;0H]", "\033[2J", WELCOME_MSG, MAIN_MENU, PROMPT};
+      |                                              ^~~~~~~~~~~
+../Core/Src/main.c:228:59: error: 'MAIN_MENU' undeclared (first use in this function)
+  228 |  char *strings[] = {"\033[0;0H]", "\033[2J", WELCOME_MSG, MAIN_MENU, PROMPT};
+      |                                                           ^~~~~~~~~
+../Core/Src/main.c:228:70: error: 'PROMPT' undeclared (first use in this function)
+  228 |  char *strings[] = {"\033[0;0H]", "\033[2J", WELCOME_MSG, MAIN_MENU, PROMPT};
+      |                                                                      ^~~~~~
+../Core/Src/main.c:229:7: error: 'i' undeclared (first use in this function)
+  229 |  for (i = 0; i < 5; i++) {
+      |       ^
+../Core/Src/main.c:229:2: warning: statement with no effect [-Wunused-value]
+  229 |  for (i = 0; i < 5; i++) {
+      |  ^~~
+../Core/Src/main.c:229:16: warning: comparison between pointer and integer
+  229 |  for (i = 0; i < 5; i++) {
+      |                ^
+../Core/Src/main.c:229:22: error: lvalue required as increment operand
+  229 |  for (i = 0; i < 5; i++) {
+      |                      ^~
+../Core/Src/main.c:229:21: warning: statement with no effect [-Wunused-value]
+  229 |  for (i = 0; i < 5; i++) {
+      |                     ^
+../Core/Src/main.c:230:50: error: array subscript is not an integer
+  230 |   HAL_UART_Transmit_IT(&huart2, (uint8_t*)strings[i], strlen(strings[i]));
+      |                                                  ^
+../Core/Src/main.c:230:55: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  230 |   HAL_UART_Transmit_IT(&huart2, (uint8_t*)strings[i], strlen(strings[i]));
+      |                                                       ^~~~~~
+../Core/Src/main.c:230:55: warning: incompatible implicit declaration of built-in function 'strlen'
+../Core/Src/main.c:22:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   21 | #include "main.h"
+  +++ |+#include <string.h>
+   22 | 
+../Core/Src/main.c:230:69: error: array subscript is not an integer
+  230 |   HAL_UART_Transmit_IT(&huart2, (uint8_t*)strings[i], strlen(strings[i]));
+      |                                                                     ^
+../Core/Src/main.c:230:62: warning: passing argument 1 of 'strlen' from incompatible pointer type [-Wincompatible-pointer-types]
+  230 |   HAL_UART_Transmit_IT(&huart2, (uint8_t*)strings[i], strlen(strings[i]));
+      |                                                              ^~~~~~~~~~
+      |                                                              |
+      |                                                              char **
+../Core/Src/main.c:230:62: note: expected 'const char *' but argument is of type 'char **'
+../Core/Src/main.c:228:8: warning: variable 'strings' set but not used [-Wunused-but-set-variable]
+  228 |  char *strings[] = {"\033[0;0H]", "\033[2J", WELCOME_MSG, MAIN_MENU, PROMPT};
+      |        ^~~~~~~
+../Core/Src/main.c: In function 'readUserInput':
+../Core/Src/main.c:238:5: error: 'UartRead' undeclared (first use in this function)
+  238 |  if(UartRead == SET){
+      |     ^~~~~~~~
+../Core/Src/main.c:238:14: warning: comparison between pointer and integer
+  238 |  if(UartRead == SET){
+      |              ^~
+../Core/Src/main.c:239:3: error: 'UartReady' undeclared (first use in this function)
+  239 |   UartReady = RESET;
+      |   ^~~~~~~~~
+../Core/Src/main.c:239:3: warning: statement with no effect [-Wunused-value]
+../Core/Src/main.c:240:42: error: 'readBuf' undeclared (first use in this function)
+  240 |   HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
+      |                                          ^~~~~~~
+../Core/Src/main.c:241:12: warning: implicit declaration of function 'atoi' [-Wimplicit-function-declaration]
+  241 |   retVal = atoi(readBuf);
+      |            ^~~~
+../Core/Src/main.c: In function 'processUserInput':
+../Core/Src/main.c:251:2: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  251 |  sprintf(msg, "%d", opt);
+      |  ^~~~~~~
+../Core/Src/main.c:251:2: warning: incompatible implicit declaration of built-in function 'sprintf'
+../Core/Src/main.c:22:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   21 | #include "main.h"
+  +++ |+#include <stdio.h>
+   22 | 
+../Core/Src/main.c:252:44: warning: incompatible implicit declaration of built-in function 'strlen'
+  252 |  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+      |                                            ^~~~~~
+../Core/Src/main.c:252:44: note: include '<string.h>' or provide a declaration of 'strlen'
+../Core/Src/main.c:256:30: error: 'GPION_PIN_5' undeclared (first use in this function); did you mean 'GPIO_PIN_5'?
+  256 |    HAL_GPIO_TogglePin(GPIOA, GPION_PIN_5);
+      |                              ^~~~~~~~~~~
+      |                              GPIO_PIN_5
+../Core/Src/main.c:256:30: warning: passing argument 2 of 'HAL_GPIO_TogglePin' makes integer from pointer without a cast [-Wint-conversion]
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:278,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:30,
+                 from ../Core/Inc/main.h:31,
+                 from ../Core/Src/main.c:21:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:237:55: note: expected 'uint16_t' {aka 'short unsigned int'} but argument is of type 'char **'
+  237 | void HAL_GPIO_TogglePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                              ~~~~~~~~~^~~~~~~~
+../Core/Src/main.c:260:30: error: 'GPION_PIN_13' undeclared (first use in this function); did you mean 'GPIO_PIN_13'?
+  260 |      HAL_GPIO_ReadPin(GPIOC, GPION_PIN_13) == GPIO_PIN_RESET ? "PRESSED" : "RELEASED");
+      |                              ^~~~~~~~~~~~
+      |                              GPIO_PIN_13
+../Core/Src/main.c:260:30: warning: passing argument 2 of 'HAL_GPIO_ReadPin' makes integer from pointer without a cast [-Wint-conversion]
+In file included from ../Core/Inc/stm32f4xx_hal_conf.h:278,
+                 from ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:30,
+                 from ../Core/Inc/main.h:31,
+                 from ../Core/Src/main.c:21:
+../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h:235:62: note: expected 'uint16_t' {aka 'short unsigned int'} but argument is of type 'char **'
+  235 | GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+      |                                                     ~~~~~~~~~^~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+
+14:21:26 Build Failed. 14 errors, 15 warnings. (took 292ms)
+

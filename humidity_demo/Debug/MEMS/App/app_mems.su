@@ -1,0 +1,12 @@
+app_mems.c:63:6:MX_MEMS_Init	8	static
+app_mems.c:84:6:MX_MEMS_Process	8	static
+app_mems.c:101:6:MX_IKS01A3_DataLogTerminal_Init	48	static
+app_mems.c:177:6:BSP_PB_Callback	16	static
+app_mems.c:186:6:MX_IKS01A3_DataLogTerminal_Process	16	static
+app_mems.c:249:13:floatToInt	32	static
+app_mems.c:271:13:Accelero_Sensor_Handler	88	static
+app_mems.c:335:13:Gyro_Sensor_Handler	88	static
+app_mems.c:399:13:Magneto_Sensor_Handler	88	static
+app_mems.c:463:13:Temp_Sensor_Handler	56	static
+app_mems.c:516:13:Press_Sensor_Handler	48	static
+app_mems.c:569:13:Hum_Sensor_Handler	48	static
