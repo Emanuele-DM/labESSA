@@ -22,7 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,7 +44,16 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
-uint8_t opt = 0;
+uint8_t Feedback[] = "\r\nData sent!\r\n";
+char WELCOME_MSG[] = "\r\nBuongiorno mondo!\r\n";
+char MENU[] = "\r\nPremere [1] per commutare il LED verde, [2] per restituire lo stato del pulsante blu, [3] per ristampare questo menu.\r\n";
+char PROMPT[] = ">";
+char readBuf[1];
+char ERROR_MSG[] = "Please insert a valid number.\r\n";
+char msg[30];
+volatile uint8_t user_choice = 10;
+volatile uint8_t read_buffer_new = 0;
+volatile uint8_t ready_to_tx = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -50,9 +61,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-void printWelcomeMessage(void);
-int8_t readUserInput(void);
-uint8_t processUserInput(uint8_t opt);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -66,6 +74,7 @@ uint8_t processUserInput(uint8_t opt);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -88,22 +97,50 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  printMessage:
-  printWelcomeMessage();
+  HAL_UART_Transmit_IT(&huart2, (uint8_t*)WELCOME_MSG, strlen(WELCOME_MSG));
+  HAL_Delay(1000);
+  HAL_UART_Transmit_IT(&huart2, (uint8_t*)MENU, strlen(MENU));
+  HAL_Delay(1000);
+  HAL_UART_Transmit_IT(&huart2, (uint8_t*)PROMPT, strlen(PROMPT));
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  opt = readUserInput();
-	  if(opt > 0){
-		  processUserInput(opt);
-		  if(opt == 3)
-			  goto printMessage;
+	  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
+	  if(read_buffer_new == 1) {
+		  user_choice = atoi(readBuf);
+	  }
+	  //prints an error message if the user inputs a value other than the proposed ones
+	  //	  if (user_choice <0 || user_choice >3){
+//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)ERROR_MSG, strlen(ERROR_MSG));
+//	  }
+	  if (user_choice > 0){
+		  switch(user_choice){
+			  case 1:
+				  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+				  read_buffer_new = 0;
+				  user_choice = 0;
+				  break;
+			  case 2:
+				  sprintf(msg, "\r\nUSER BUTTON STATUS: %s",
+						  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET ? "PRESSED" : "RELEASED");
+				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+				  read_buffer_new = 0;
+				  user_choice = 0;
+				  break;
+			  case 3:
+				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)MENU, strlen(MENU));
+				  HAL_Delay(1000);
+				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)PROMPT, strlen(PROMPT));
+				  user_choice = 0;
+				  read_buffer_new = 0;
+				  break;
+			  //default:
+		  }
 	  }
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -220,48 +257,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle){
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	read_buffer_new = 1;
 }
-
-void printWelcomeMessage(void){
-	char *strings[] = {"\033[0;0H]", "\033[2J", WELCOME_MSG, MAIN_MENU, PROMPT};
-	for (i = 0; i < 5; i++) {
-		HAL_UART_Transmit_IT(&huart2, (uint8_t*)strings[i], strlen(strings[i]));
-		while (HAL_UART_GetState(&huart2) == HAL_UART_STATE_BUSY_TX ||
-				HAL_UART_GetState(&huart2) == HAL_UART_STATE_BUSY_TX_RX);
-	}
-}
-
-int8_t readUserInput(void) {
-	int8_t retVal = -1;
-	if(UartRead == SET){
-		UartReady = RESET;
-		HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
-		retVal = atoi(readBuf);
-	}
-	return retVal;
-}
-
-uint8_t processUserInput(uint8_t opt){
-	char msg[30];
-
-	if(!opt || opt > 3)
-		return 0;
-	sprintf(msg, "%d", opt);
-	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-
-	switch (opt) {
-		case 1:
-			HAL_GPIO_TogglePin(GPIOA, GPION_PIN_5);
-			break;
-		case 2:
-			sprintf(msg, "\r\nUSER BUTTON status: %s",
-					HAL_GPIO_ReadPin(GPIOC, GPION_PIN_13) == GPIO_PIN_RESET ? "PRESSED" : "RELEASED");
-			HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-		case 3:
-			return 2;
-	}
-	return 1;
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+	ready_to_tx = 1;
 }
 /* USER CODE END 4 */
 

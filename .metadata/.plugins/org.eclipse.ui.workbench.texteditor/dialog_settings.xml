@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Instance"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="TIM3"/>
+			<item value="pins"/>
+			<item value="PINS"/>
+			<item value="HAL_TIM"/>
+			<item value="HAL_TIM_ACTIVE"/>
+			<item value="htim-&gt;Instance"/>
+			<item value="channel"/>
+			<item value="HAL_TIM_IRQHandler"/>
 			<item value="instance"/>
 			<item value="EnvCapabilities"/>
 			<item value="envcapabilities"/>
@@ -15,21 +23,13 @@
 			<item value="capabilities"/>
 			<item value="MX_IKS01A3_DataLogTerminal_Process"/>
 			<item value="process"/>
-			<item value="Process"/>
-			<item value="static void Hum_Sensor_Handler(uint32_t Instance)"/>
-			<item value="HTS221"/>
-			<item value="IKS01A3_ENV_SENSOR_GetValue"/>
-			<item value="call"/>
-			<item value="NVIC"/>
-			<item value="UART_Handle"/>
-			<item value="enableirq"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="826"/>
-		<item key="DIALOG_Y_ORIGIN" value="348"/>
+		<item key="DIALOG_X_ORIGIN" value="1016"/>
+		<item key="DIALOG_Y_ORIGIN" value="361"/>
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

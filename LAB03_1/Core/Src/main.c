@@ -105,18 +105,18 @@ int main(void)
   {
 	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
 		  if (TIM3->CCR2 == 90)
-			  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+			  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
 		  TIM3->CCR2 = 10;
 	  }
 	  else if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC1) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC1);
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
 	  }
 	  else if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC2) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC2);
-		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
 		  if (TIM3->CCR2 != 90)
 		  TIM3->CCR2 += 10;
 	  }
@@ -282,10 +282,10 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, square2_5_Pin|square12_5_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(prova_GPIO_Port, prova_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -293,19 +293,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : square2_5_Pin square12_5_Pin */
+  GPIO_InitStruct.Pin = square2_5_Pin|square12_5_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pin : LD2_Pin */
   GPIO_InitStruct.Pin = LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : prova_Pin */
-  GPIO_InitStruct.Pin = prova_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(prova_GPIO_Port, &GPIO_InitStruct);
 
 }
 

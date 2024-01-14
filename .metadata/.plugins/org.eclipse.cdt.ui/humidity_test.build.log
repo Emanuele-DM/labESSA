@@ -1,0 +1,10 @@
+15:18:56 **** Incremental Build of configuration Debug for project humidity_test ****
+make -j12 all 
+arm-none-eabi-size   humidity_test.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9848	     20	   1636	  11504	   2cf0	humidity_test.elf
+Finished building: default.size.stdout
+ 
+
+15:18:57 Build Finished. 0 errors, 0 warnings. (took 347ms)
+

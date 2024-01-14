@@ -99,7 +99,7 @@ int main(void)
 	  // generate a 500hz square wave
 	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10);
 	  // 1ms delay
-	  HAL_Delay(1);
+	  HAL_Delay(0.5);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

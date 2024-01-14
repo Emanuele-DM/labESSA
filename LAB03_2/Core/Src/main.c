@@ -95,17 +95,30 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
   HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
-  TIM3->CCR1=49;
+  TIM3->CCR1=30;
+  TIM3->CCR2=1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
-		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_7);
+//	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
+//		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
+//	  }
+	  if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC1) != RESET){
+		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC1);
+			if (TIM3->CCR1 == 80) {
+				TIM3->CCR1 = 30;
+			}
+			else TIM3->CCR1 = 80;
+	  }
+	  else if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC2) != RESET){
+		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC2);
+			if (TIM3->CCR2 == 91) {
+				TIM3->CCR2 = 1;
+			}
+			else TIM3->CCR2 += 10;
 	  }
     /* USER CODE END WHILE */
 
