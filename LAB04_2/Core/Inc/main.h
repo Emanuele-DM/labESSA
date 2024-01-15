@@ -68,6 +68,8 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOA
 #define TIM3_CH1_Pin GPIO_PIN_6
 #define TIM3_CH1_GPIO_Port GPIOA
+#define ONDA_QUADRA_Pin GPIO_PIN_9
+#define ONDA_QUADRA_GPIO_Port GPIOC
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14

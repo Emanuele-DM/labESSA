@@ -33,6 +33,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define CAPTURING 0
+#define DONE 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,6 +52,9 @@ UART_HandleTypeDef huart2;
 char msg[30];
 volatile uint32_t capture_one = 0;
 char test[] = "\rHo catturato qualcosa!\r\n";
+char msg_overflow[] = "\rOverflow!\r\n";
+volatile uint32_t number_of_overflows = 0;
+volatile uint8_t capture_state = CAPTURING;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,9 +114,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC1) != RESET){
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
-	  }
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -228,7 +231,7 @@ static void MX_TIM3_Init(void)
 {
 
   /* USER CODE BEGIN TIM3_Init 0 */
-
+//	__HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 0 */
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -236,7 +239,7 @@ static void MX_TIM3_Init(void)
   TIM_IC_InitTypeDef sConfigIC = {0};
 
   /* USER CODE BEGIN TIM3_Init 1 */
-
+//  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 167;
@@ -263,7 +266,7 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_BOTHEDGE;
   sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
   sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
   sConfigIC.ICFilter = 0;
@@ -272,7 +275,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
-
+  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE); //Enables the TIM_IT_UPDATE interrupt -> enables PeriodElapsed callback
   /* USER CODE END TIM3_Init 2 */
 
 }
@@ -328,6 +331,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(ONDA_QUADRA_GPIO_Port, ONDA_QUADRA_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -341,38 +347,53 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : ONDA_QUADRA_Pin */
+  GPIO_InitStruct.Pin = ONDA_QUADRA_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(ONDA_QUADRA_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM2){
 		//if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6);
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 //		HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
-//		if (TIM2->CCR1 == 10) {
-//			TIM2->CCR1 = 20;
+		if (TIM2->CCR1 == 10) {
+			TIM2->CCR1 = 20;
 //			//			capture_one = TIM3->CCR1;
 //			//			sprintf(msg, "Rising edge: %lu\r\n", capture_one);
 //			//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-//		}
-//		else TIM2->CCR1 = 10;
+		}
+		else TIM2->CCR1 = 10;
 	}
 }
-//void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
-////		// Rising edge
-////		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_5) == GPIO_PIN_SET){
-////			capture_one = TIM3->CCR1;
-////			sprintf(msg, "Rising edge: %lu\r\n", capture_one);
-////			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-////		}
-////		// Falling edge
-////		else {
-////			sprintf(msg, "Falling edge: %lu\r\n", TIM3->CCR1);
-////			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-////		}
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
+		// Rising edge
+		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
+//			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+			capture_one = TIM3->CCR1;
+//			sprintf(msg, "Rising edge: %lu\r\n", capture_one);
+//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		}
+		// Falling edge
+		else {
+//			sprintf(msg, "Falling edge: %lu\r\n", TIM3->CCR1);
+//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		}
 //		HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
-//}
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
+//	if (htim->Instance == TIM3){
+//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg_overflow, strlen(msg_overflow));
+	number_of_overflows++;
+//	}
+}
 /* USER CODE END 4 */
 
 /**

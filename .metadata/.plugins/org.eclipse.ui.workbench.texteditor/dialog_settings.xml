@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="IRQ"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="IRQ"/>
+			<item value="TIM"/>
+			<item value="irq"/>
+			<item value="TIM_PeriodElapsed"/>
+			<item value="periodelapsed"/>
 			<item value="TIM3"/>
 			<item value="pins"/>
 			<item value="PINS"/>
@@ -18,11 +23,6 @@
 			<item value="HAL_TIM_IRQHandler"/>
 			<item value="instance"/>
 			<item value="EnvCapabilities"/>
-			<item value="envcapabilities"/>
-			<item value="envcapabili"/>
-			<item value="capabilities"/>
-			<item value="MX_IKS01A3_DataLogTerminal_Process"/>
-			<item value="process"/>
 		</list>
 		<list key="replacehistory">
 		</list>
