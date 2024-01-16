@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 #include "string.h"
 #include <stdio.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,8 +54,18 @@ char msg[30];
 volatile uint32_t capture_one = 0;
 char test[] = "\rHo catturato qualcosa!\r\n";
 char msg_overflow[] = "\rOverflow!\r\n";
-volatile uint32_t number_of_overflows = 0;
+volatile uint8_t number_of_overflows = 0;
 volatile uint8_t capture_state = CAPTURING;
+volatile uint16_t cnt_1 = 0;
+volatile uint16_t cnt_2 = 0;
+volatile uint16_t cnt_fall = 0;
+volatile uint16_t delta_cnt;
+volatile uint16_t frequency;
+volatile uint8_t dutycycle;
+volatile uint8_t read_buffer_new = 0;
+char readBuf[1];
+char msg[30];
+volatile uint8_t user_choice = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,6 +124,38 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
+	  //prints an error message if the user inputs a value other than the proposed ones
+	  //	  if (user_choice <0 || user_choice >3){
+	  //		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)ERROR_MSG, strlen(ERROR_MSG));
+	  //	  }
+//	  if (number_of_overflows != 0){
+//		  sprintf(msg, "Overflow number: %u\r\n", number_of_overflows);
+//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+//	  }
+	  if (capture_state == DONE){
+		  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){ // falling edge
+			  if (cnt_1 == 0){
+				  cnt_1 = TIM3->CCR1;
+				  capture_state = CAPTURING;
+			  }
+			  else {
+				  cnt_2 = TIM3->CCR1;
+				  if (number_of_overflows == 2) HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+				  delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
+				  frequency = 50*10000/delta_cnt;
+				  delta_
+				  dutycycle = (cnt_fall+number_of_overflows*10000-cnt_1)/delta_cnt;
+				  cnt_1 = 0;
+				  number_of_overflows = 0;
+				  capture_state = CAPTURING;
+			  }
+		  }
+		  else { //falling edge
+			  cnt_fall = TIM3->CCR1;
+			  capture_state = CAPTURING;
+		  }
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -361,38 +404,43 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM2){
 		//if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
 		if (TIM2->CCR1 == 10) {
 			TIM2->CCR1 = 20;
-//			//			capture_one = TIM3->CCR1;
-//			//			sprintf(msg, "Rising edge: %lu\r\n", capture_one);
-//			//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 		}
 		else TIM2->CCR1 = 10;
 	}
 }
+
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
-		// Rising edge
-		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
-//			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-			capture_one = TIM3->CCR1;
-//			sprintf(msg, "Rising edge: %lu\r\n", capture_one);
-//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-		}
-		// Falling edge
-		else {
-//			sprintf(msg, "Falling edge: %lu\r\n", TIM3->CCR1);
-//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-		}
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
+	// Rising edge
+	capture_state = DONE;
 }
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
-//	if (htim->Instance == TIM3){
-//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg_overflow, strlen(msg_overflow));
-	number_of_overflows++;
-//	}
+	if (htim->Instance == TIM3){
+//		if (capture_state == DONE) HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		number_of_overflows++;
+	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	//	read_buffer_new = 1;
+	//	  if(read_buffer_new == 1) {
+	//		  user_choice = atoi(readBuf);
+	//	  }
+	user_choice = atoi(readBuf);
+	if (user_choice == 1){
+		sprintf(msg, "Current frequency: %u\r\n", delta_cnt);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		//			read_buffer_new = 0;
+		user_choice = 3;
+	}
+	else if (user_choice == 2){
+		sprintf(msg, "Current duty cycle: %u\r\n", dutycycle);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		//			read_buffer_new = 0;
+		user_choice = 3;
+	}
 }
 /* USER CODE END 4 */
 

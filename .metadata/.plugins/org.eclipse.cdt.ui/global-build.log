@@ -4051,3 +4051,805 @@ Finished building: LAB04_2.bin
  
 Finished building: LAB04_2.list
  
+16:41:39 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:59:10: error: unknown type name 'uitn8_t'
+   59 | volatile uitn8_t cnt_2 = 0;
+      |          ^~~~~~~
+../Core/Src/main.c: In function 'HAL_TIM_IC_CaptureCallback':
+../Core/Src/main.c:391:4: error: 'deltat' undeclared (first use in this function)
+  391 |    deltat = cnt_2 + number_of_overflows*TIM3->ARR - cnt_1;
+      |    ^~~~~~
+../Core/Src/main.c:391:4: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:42:26 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_TIM_IC_CaptureCallback':
+../Core/Src/main.c:393:25: error: 'deltat' undeclared (first use in this function); did you mean 'delta_cnt'?
+  393 |    frequency = 50*10000/deltat;
+      |                         ^~~~~~
+      |                         delta_cnt
+../Core/Src/main.c:393:25: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:42:39 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_TIM_IC_CaptureCallback':
+../Core/Src/main.c:393:25: error: 'delt_cnt' undeclared (first use in this function); did you mean 'delta_cnt'?
+  393 |    frequency = 50*10000/delt_cnt;
+      |                         ^~~~~~~~
+      |                         delta_cnt
+../Core/Src/main.c:393:25: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:394:63: error: 'deltat' undeclared (first use in this function); did you mean 'delta_cnt'?
+  394 |    dutycycle = (cnt_fall+number_of_overflows*TIM3->ARR-cnt_1)/deltat;
+      |                                                               ^~~~~~
+      |                                                               delta_cnt
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:42:54 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16456	     20	   1828	  18304	   4780	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:47:21 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:127:5: error: 'user_choice' undeclared (first use in this function)
+  127 |     user_choice = atoi(readBuf);
+      |     ^~~~~~~~~~~
+../Core/Src/main.c:127:5: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:127:19: warning: implicit declaration of function 'atoi' [-Wimplicit-function-declaration]
+  127 |     user_choice = atoi(readBuf);
+      |                   ^~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:47:56 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:128:19: warning: implicit declaration of function 'atoi' [-Wimplicit-function-declaration]
+  128 |     user_choice = atoi(readBuf);
+      |                   ^~~~
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20064	    120	   1864	  22048	   5620	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:48:53 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20064	    120	   1864	  22048	   5620	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:50:03 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20080	    120	   1864	  22064	   5630	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:51:44 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20064	    120	   1864	  22048	   5620	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:52:54 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20064	    120	   1864	  22048	   5620	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+16:53:22 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20064	    120	   1864	  22048	   5620	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:02:11 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:138:41: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+  138 |      sprintf(msg, "Current frequency: %lu\r\n", frequency);
+      |                                       ~~^       ~~~~~~~~~
+      |                                         |       |
+      |                                         |       int
+      |                                         long unsigned int
+      |                                       %u
+../Core/Src/main.c:144:41: warning: format '%lu' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Wformat=]
+  144 |      sprintf(msg, "Current frequency: %lu\r\n", dutycycle);
+      |                                       ~~^       ~~~~~~~~~
+      |                                         |       |
+      |                                         |       int
+      |                                         long unsigned int
+      |                                       %u
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20040	    120	   1864	  22024	   5608	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:02:35 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20036	    120	   1864	  22020	   5604	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:03:28 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20056	    120	   1864	  22040	   5618	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:09:59 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20056	    120	   1864	  22040	   5618	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:11:40 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20076	    120	   1864	  22060	   562c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:12:29 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20080	    120	   1864	  22064	   5630	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:18:03 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:138:40: warning: format '%u' expects argument of type 'unsigned int', but argument 3 has type 'uint32_t' {aka 'volatile long unsigned int'} [-Wformat=]
+  138 |      sprintf(msg, "Current frequency: %u\r\n", number_of_overflows);
+      |                                       ~^       ~~~~~~~~~~~~~~~~~~~
+      |                                        |       |
+      |                                        |       uint32_t {aka volatile long unsigned int}
+      |                                        unsigned int
+      |                                       %lu
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20080	    120	   1864	  22064	   5630	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:18:42 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20088	    120	   1864	  22072	   5638	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:19:17 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20088	    120	   1864	  22072	   5638	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:21:30 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20096	    120	   1864	  22080	   5640	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:22:23 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:22:46 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:23:29 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20120	    120	   1864	  22104	   5658	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:23:48 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20120	    120	   1864	  22104	   5658	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:24:06 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20120	    120	   1864	  22104	   5658	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:28:10 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:28:35 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:28:54 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:30:32 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20136	    136	   1864	  22136	   5678	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:30:49 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:34:04 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20132	    120	   1864	  22116	   5664	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:35:25 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20188	    120	   1864	  22172	   569c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:35:44 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:36:13 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:37:35 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:45:16 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'HAL_UART_RxCpltCallback':
+../Core/Src/main.c:446:3: error: break statement not within loop or switch
+  446 |   break;
+      |   ^~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+17:45:23 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20076	    120	   1864	  22060	   562c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:54:25 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20092	    120	   1864	  22076	   563c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:54:48 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20092	    120	   1864	  22076	   563c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:55:23 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20092	    120	   1864	  22076	   563c	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:57:43 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20096	    120	   1864	  22080	   5640	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+17:57:57 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+18:00:14 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+18:00:29 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+18:02:51 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20116	    120	   1864	  22100	   5654	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
+19:51:08 **** Incremental Build of configuration Debug for project LAB04_2 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB04_2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB04_2\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB04_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB04_2.elf
+ 
+arm-none-eabi-size   LAB04_2.elf 
+arm-none-eabi-objdump -h -S  LAB04_2.elf  > "LAB04_2.list"
+arm-none-eabi-objcopy  -O binary  LAB04_2.elf  "LAB04_2.bin"
+   text	   data	    bss	    dec	    hex	filename
+  20112	    120	   1864	  22096	   5650	LAB04_2.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB04_2.bin
+ 
+Finished building: LAB04_2.list
+ 
