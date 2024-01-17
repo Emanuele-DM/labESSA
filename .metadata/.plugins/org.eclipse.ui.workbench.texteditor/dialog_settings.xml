@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="compare_value"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="compare_value"/>
+			<item value="delta_fall"/>
+			<item value="sprintf"/>
+			<item value="min_frequency"/>
+			<item value="captured_edge"/>
+			<item value="prescaler"/>
+			<item value="MX_TIM2"/>
+			<item value="ini"/>
+			<item value="PSC"/>
 			<item value="NULL"/>
 			<item value="variables"/>
 			<item value="IRQ"/>
 			<item value="TIM"/>
 			<item value="irq"/>
 			<item value="TIM_PeriodElapsed"/>
-			<item value="periodelapsed"/>
-			<item value="TIM3"/>
-			<item value="pins"/>
-			<item value="PINS"/>
-			<item value="HAL_TIM"/>
-			<item value="HAL_TIM_ACTIVE"/>
-			<item value="htim-&gt;Instance"/>
-			<item value="channel"/>
-			<item value="HAL_TIM_IRQHandler"/>
 		</list>
 		<list key="replacehistory">
 		</list>

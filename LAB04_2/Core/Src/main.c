@@ -54,6 +54,7 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 char msg[30];
+char receivedData[3];
 char test[] = "\rHo catturato qualcosa!\r\n";
 char msg_overflow[] = "\rOverflow!\r\n";
 volatile uint8_t number_of_overflows = 0;
@@ -65,6 +66,8 @@ volatile uint16_t cnt_fall = 0;
 volatile uint16_t delta_cnt = 0;
 volatile uint16_t delta_fall = 0;
 volatile uint16_t frequency;
+volatile uint8_t max_frequency = 0;
+volatile uint8_t min_frequency = 0;
 volatile uint8_t dutycycle;
 volatile uint8_t read_buffer_new = 0;
 volatile uint8_t counting_fall_overflows = 0;
@@ -82,7 +85,7 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
-
+void processCapturedData(uint8_t edge_type);//
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -129,9 +132,9 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
   while (1)
   {
-	  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
 	  //prints an error message if the user inputs a value other than the proposed ones
 	  //	  if (user_choice <0 || user_choice >3){
 	  //		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)ERROR_MSG, strlen(ERROR_MSG));
@@ -140,41 +143,20 @@ int main(void)
 	  //		  sprintf(msg, "Overflow number: %u\r\n", number_of_overflows);
 	  //		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 	  //	  }
-
-	  if (captured_edge == RISING){
-		  if (cnt_1 == 0 && cnt_2 == 0 && cnt_fall == 0){
-			  cnt_1 = TIM3->CCR1;
-			  counting_fall_overflows = 1;
-			  counting_overflows = 1;
-			  variables_reset = 0;
-			  captured_edge = NONE;
-		  }
-		  else if (cnt_fall != 0 && cnt_2 == 0 && cnt_1 != 0){
-			  cnt_2 = TIM3->CCR1;
-			  counting_overflows = 0;
-			  delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
-			  frequency = 50*10000/delta_cnt;
-			  delta_fall = cnt_fall + number_of_overflows_fall*10000 - cnt_1;
-			  dutycycle = 100*delta_fall/delta_cnt;
-			  captured_edge = NONE;
-		  }
+	  if (captured_edge != NONE){
+		  processCapturedData(captured_edge);
 	  }
-	  else if(captured_edge == FALLING){
-		  if (cnt_1 != 0 && cnt_2 == 0 && cnt_fall == 0){
-			  cnt_fall = TIM3->CCR1;
-			  captured_edge = NONE;
-			  counting_fall_overflows = 0;
-		  }
-	  }
-	  if (frequency !=0 && dutycycle != 0){
-		  if(variables_reset != 1){
+	  if (number_of_overflows > 100){
 		  cnt_1 = 0;
 		  cnt_2 = 0;
 		  cnt_fall = 0;
-		  variables_reset = 1;
-		  }
+		  delta_cnt = 0;
+		  delta_fall = 0;
+		  dutycycle = 0;
+		  frequency = 0;
+		  number_of_overflows = 0;
+		  counting_overflows = 0;
 	  }
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -246,7 +228,7 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 8399;
+  htim2.Init.Prescaler = 4199;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 99;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -421,8 +403,8 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM2){
-		//if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		if (TIM2->CCR1 == 30) {
 			TIM2->CCR1 = 20;
 		}
@@ -434,7 +416,58 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
 		captured_edge = RISING;
 	}
-	else captured_edge = FALLING;
+	else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_RESET){
+		captured_edge = FALLING;
+	}
+//	processCapturedData(captured_edge);
+}
+
+void processCapturedData(uint8_t captured_edge){
+	switch (captured_edge) {
+	case RISING:
+		if (cnt_1 == 0 && cnt_2 == 0 && cnt_fall == 0){
+			counting_overflows = 0;
+			number_of_overflows = 0;
+			cnt_1 = TIM3->CCR1;
+//			sprintf(msg, "cnt_t1: %u\r\n", cnt_1);
+//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+			counting_fall_overflows = 1;
+			counting_overflows = 1;
+			variables_reset = 0;
+			captured_edge = NONE;
+		}
+		else if (cnt_fall != 0 && cnt_2 == 0 && cnt_1 != 0){
+			cnt_2 = TIM3->CCR1;
+//			sprintf(msg, "cnt_t2: %u\r\n", cnt_2);
+//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+			counting_overflows = 0;
+			delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
+			frequency = 50*10000/delta_cnt;
+			if (frequency > max_frequency) max_frequency = frequency;
+			else if (frequency < min_frequency) min_frequency = frequency;
+			delta_fall = cnt_fall + number_of_overflows_fall*10000 - cnt_1;
+			dutycycle = 100*delta_fall/delta_cnt;
+			captured_edge = NONE;
+		}
+		break;
+	case FALLING:
+		if (cnt_1 != 0 && cnt_2 == 0 && cnt_fall == 0){
+			cnt_fall = TIM3->CCR1;
+//			sprintf(msg, "cnt_fall: %u\r\n", cnt_fall);
+//			HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+			captured_edge = NONE;
+			counting_fall_overflows = 0;
+		}
+		break;
+	}
+	if (frequency !=0 && dutycycle != 0){
+		if(variables_reset != 1){
+			cnt_1 = 0;
+			cnt_2 = 0;
+			cnt_fall = 0;
+			variables_reset = 1;
+		}
+	}
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
@@ -447,25 +480,32 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	//	read_buffer_new = 1;
-	//	  if(read_buffer_new == 1) {
-	//		  user_choice = atoi(readBuf);
-	//	  }
+void processReceivedData(void){
 	user_choice = atoi(readBuf);
+//	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 	if (user_choice == 1){
 		sprintf(msg, "Current frequency: %u\r\n", frequency);
+//		HAL_Delay(10);
 		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-		//			read_buffer_new = 0;
-		user_choice = 3;
 	}
 	else if (user_choice == 2){
 		sprintf(msg, "Current duty cycle: %u\r\n", dutycycle);
 		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 		//			read_buffer_new = 0;
-		user_choice = 3;
 	}
-	else HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	else {HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	//	read_buffer_new = 1;
+	//	  if(read_buffer_new == 1) {
+	//		  user_choice = atoi(readBuf);
+	//	  }
+	processReceivedData();
+	HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
 }
 /* USER CODE END 4 */
 
