@@ -3009,3 +3009,6 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2024-01-18 12:10:03.708
 !MESSAGE Won't launch debug session since we failed to locate the binary.
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-18 12:46:31.305
+!MESSAGE Indexed 'LAB05_3' (22 sources, 82 headers) in 2.34 sec: 4,730 declarations; 22,470 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0074%)
