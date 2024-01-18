@@ -3000,3 +3000,12 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-18 06:40:18.939
 !MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2024-01-18 10:22:15.201
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.gdb.internal.ui.actions.DsfTerminateCommand$3$1@7d0a9f0e): Status OK: unknown code=0 OK null' resulted in a rejected execution exception.
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-18 11:06:46.049
+!MESSAGE Indexed 'LAB05_1' (22 sources, 82 headers) in 2.19 sec: 4,730 declarations; 22,470 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0074%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2024-01-18 12:10:03.708
+!MESSAGE Won't launch debug session since we failed to locate the binary.

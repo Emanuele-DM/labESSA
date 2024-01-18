@@ -1,0 +1,20 @@
+12:42:47 **** Incremental Build of configuration Debug for project LAB05_1 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_1\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_1.elf
+ 
+arm-none-eabi-size   LAB05_1.elf 
+arm-none-eabi-objdump -h -S  LAB05_1.elf  > "LAB05_1.list"
+arm-none-eabi-objcopy  -O binary  LAB05_1.elf  "LAB05_1.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42112	    332	   2148	  44592	   ae30	LAB05_1.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_1.bin
+ 
+Finished building: LAB05_1.list
+ 
+
+12:42:48 Build Finished. 0 errors, 0 warnings. (took 916ms)
+
