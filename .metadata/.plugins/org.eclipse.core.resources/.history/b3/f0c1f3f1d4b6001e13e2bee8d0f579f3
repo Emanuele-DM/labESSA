@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -22,7 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "stdio.h"
+#include "math.h"
+#include "iks01a3_motion_sensors.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +47,14 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+int volatile time_to_read = 0;
+char msg[100];
+IKS01A3_MOTION_SENSOR_Axes_t MA5_filtered_accelero_axes;
+IKS01A3_MOTION_SENSOR_Axes_t MA50_filtered_accelero_axes[2];
+IKS01A3_MOTION_SENSOR_Axes_t IIRLP_filtered_accelero_axes[2];
+IKS01A3_MOTION_SENSOR_Axes_t circular_buffer[5];
+IKS01A3_MOTION_SENSOR_Axes_t circular_buffer_51[51];
+uint8_t cnt = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +63,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
-
+void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t sensorData, const char *sensorName);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,18 +102,61 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
-  TIM3->CCR1=59;
+  HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
+  IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
+  IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
+  MA5_filtered_accelero_axes.x = 0;
+  MA5_filtered_accelero_axes.y = 0;
+  MA5_filtered_accelero_axes.z = 0;
+  for (int i = 0; i < 5; ++i) {
+      // Set the entire structure to zero
+      memset(&circular_buffer[i], 0, sizeof(circular_buffer[i]));
+  }
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
-//		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
-//	  }
+	  if (time_to_read == 1){
+		  ++cnt;
+//		  if (cnt == 51) 51_data_acquired = 1;
+		  time_to_read = 0;
+		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer[0]);
+		  // moving averge FIR filter with 5 coefficients
+		  for (int i = 0; i<5; ++i){
+			  MA5_filtered_accelero_axes.x = MA5_filtered_accelero_axes.x + circular_buffer[i].x;
+			  MA5_filtered_accelero_axes.y = MA5_filtered_accelero_axes.y + circular_buffer[i].y;
+			  MA5_filtered_accelero_axes.z = MA5_filtered_accelero_axes.z + circular_buffer[i].z;
+		  }
+		  MA5_filtered_accelero_axes.x /= 5;
+		  MA5_filtered_accelero_axes.y /= 5;
+		  MA5_filtered_accelero_axes.z /= 5;
+		  uint8_t length = sprintf(msg, "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
+		  			"Unfiltered acc", circular_buffer[0].x, circular_buffer[0].y, circular_buffer[0].z,
+					"Filtered acc", MA5_filtered_accelero_axes.x, MA5_filtered_accelero_axes.y, MA5_filtered_accelero_axes.z);
+		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+		  for (int j = 4; j > 0; --j) {
+			  memcpy(&circular_buffer[j-1], &circular_buffer[j], sizeof(circular_buffer[j]));
+		  }
+		  memset(&MA5_filtered_accelero_axes, 0, sizeof(MA5_filtered_accelero_axes));
+		  // moving average FIR filter with 50 coefficients
+//		  if (51_data_acquired = 1;)
+//		  for (int i = 0; i<5; ++i){
+//			  MA50_filtered_accelero_axes.x += circular_buffer[i].x;
+//			  MA50_filtered_accelero_axes.y += circular_buffer[i].y;
+//			  MA50_filtered_accelero_axes.z += circular_buffer[i].z;
+//		  }
+
+		  // low pas IIR filter
+//		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2MDL_0, MOTION_MAGNETO, &magneto_axes);
+//		  transmitSensorData(&gyro_axes, "Gyro");
+
+//		  transmitSensorData(circular_buffer[0], "Acc");
+//		  transmitSensorData(MA5_filtered_accelero_axes, "Acc_filtered");
+		  //		  transmitSensorData(&magneto_axes, "Magneto");
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -176,9 +228,9 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 335;
+  htim3.Init.Prescaler = 839;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 9;
+  htim3.Init.Period = 999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -200,22 +252,17 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
-  sConfigOC.Pulse = 0;
+  sConfigOC.OCMode = TIM_OCMODE_TIMING;
+  sConfigOC.Pulse = 499;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
-  if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
-  HAL_TIM_MspPostInit(&htim3);
 
 }
 
@@ -286,7 +333,16 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
+	time_to_read = 1;
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+}
 
+//void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t sensor_axes, const char *sensorName){
+//	uint8_t length = sprintf(msg, "%s X:%ld, Y:%ld, Z:%ld\n\r",
+//			sensorName, sensor_axes.x, sensor_axes.y, sensor_axes.z);
+//	HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+//}
 /* USER CODE END 4 */
 
 /**

@@ -120,12 +120,16 @@ int main(void)
 //		  transmitSensorData(&gyro_axes, "Gyro");
 //		  transmitSensorData(&accelero_axes, "Accelero");
 //		  transmitSensorData(&magneto_axes, "Magneto");
+//		  uint8_t length = sprintf(msg, ""
+//				  "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
+//		  			"Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
+//					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
+//					"Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
+//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 		  uint8_t length = sprintf(msg, ""
-				  "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
-		  			"Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
-					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
-					"Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
-		  	HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+				  "%s X:%ld, Y:%ld, Z:%ld\n\r",
+					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z);
+		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 	  }
     /* USER CODE END WHILE */
 
