@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <string.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,8 +48,9 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint32_t converted_value;
+uint16_t converted_value = 0;
 volatile uint8_t ready_to_send = 0;
+uint8_t length = 0;
 char msg[30];
 /* USER CODE END PV */
 
@@ -64,7 +66,6 @@ static void MX_TIM3_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-HAL_StatusTypeDef HAL_ADC_Start_IT (ADC_HandleTypeDef * hadc1);
 /* USER CODE END 0 */
 
 /**
@@ -99,16 +100,20 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_ADC_Start_IT (&hadc1);
+  HAL_TIM_OC_Start_IT (&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if (ready_to_send){
-		  sprintf(msg, "Overflow number: %lu\r\n", converted_value);
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+	  if (ready_to_send == 1){
+//		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		  ready_to_send = 0;
+		  length = sprintf(msg, "Converted value: %u\r\n", converted_value);
+		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)"Hello", strlen("Hello"));
 	  }
     /* USER CODE END WHILE */
 
@@ -233,7 +238,7 @@ static void MX_TIM3_Init(void)
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 41999;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 1000;
+  htim3.Init.Period = 999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -256,7 +261,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_TOGGLE;
-  sConfigOC.Pulse = 0;
+  sConfigOC.Pulse = 499;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -338,9 +343,11 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef * hadc){
+//	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 	converted_value = HAL_ADC_GetValue(&hadc1);
 	ready_to_send = 1;
 }
+
 /* USER CODE END 4 */
 
 /**
