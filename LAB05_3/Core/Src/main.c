@@ -49,8 +49,12 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 int volatile time_to_read = 0;
 char msg[100];
-IKS01A3_MOTION_SENSOR_Axes_t filtered_accelero_axes;
+IKS01A3_MOTION_SENSOR_Axes_t MA5_filtered_accelero_axes;
+IKS01A3_MOTION_SENSOR_Axes_t MA50_filtered_accelero_axes[2];
+IKS01A3_MOTION_SENSOR_Axes_t IIRLP_filtered_accelero_axes[2];
 IKS01A3_MOTION_SENSOR_Axes_t circular_buffer[5];
+IKS01A3_MOTION_SENSOR_Axes_t circular_buffer_51[51];
+uint8_t cnt = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,9 +105,13 @@ int main(void)
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
   IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
   IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
-  filtered_accelero_axes.x = 0;
-  filtered_accelero_axes.y = 0;
-  filtered_accelero_axes.z = 0;
+  MA5_filtered_accelero_axes.x = 0;
+  MA5_filtered_accelero_axes.y = 0;
+  MA5_filtered_accelero_axes.z = 0;
+  for (int i = 0; i < 5; ++i) {
+      // Set the entire structure to zero
+      memset(&circular_buffer[i], 0, sizeof(circular_buffer[i]));
+  }
 
   /* USER CODE END 2 */
 
@@ -112,22 +120,34 @@ int main(void)
   while (1)
   {
 	  if (time_to_read == 1){
+		  ++cnt;
+		  if (cnt == 51) 51_data_acquired = 1;
 		  time_to_read = 0;
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer[0]);
+		  // moving averge FIR filter with 5 coefficients
 		  for (int i = 0; i<5; ++i){
-			  filtered_accelero_axes.x += circular_buffer[i].x;
-			  filtered_accelero_axes.y += circular_buffer[i].y;
-			  filtered_accelero_axes.z += circular_buffer[i].z;
+			  MA5_filtered_accelero_axes.x += circular_buffer[i].x;
+			  MA5_filtered_accelero_axes.y += circular_buffer[i].y;
+			  MA5_filtered_accelero_axes.z += circular_buffer[i].z;
 		  }
-		  filtered_accelero_axes.x /= 5;
-		  filtered_accelero_axes.y /= 5;
-		  filtered_accelero_axes.z /= 5;
+		  MA5_filtered_accelero_axes.x /= 5;
+		  MA5_filtered_accelero_axes.y /= 5;
+		  MA5_filtered_accelero_axes.z /= 5;
 		  for (int j = 4; j > 0; --j) {
 			  memcpy(&circular_buffer[j-1], &circular_buffer[j], sizeof(circular_buffer[j]));
 		  }
+		  // moving average FIR filter with 50 coefficients
+		  if (51_data_acquired = 1;)
+		  for (int i = 0; i<5; ++i){
+			  MA50_filtered_accelero_axes.x += circular_buffer[i].x;
+			  MA50_filtered_accelero_axes.y += circular_buffer[i].y;
+			  MA50_filtered_accelero_axes.z += circular_buffer[i].z;
+		  }
+
+		  // low pas IIR filter
 //		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2MDL_0, MOTION_MAGNETO, &magneto_axes);
 //		  transmitSensorData(&gyro_axes, "Gyro");
-		  transmitSensorData(filtered_accelero_axes, "Accelero");
+		  transmitSensorData(MA5_filtered_accelero_axes, "Accelero");
 		  //		  transmitSensorData(&magneto_axes, "Magneto");
 	  }
     /* USER CODE END WHILE */
@@ -201,9 +221,9 @@ static void MX_TIM3_Init(void)
 
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 4199;
+  htim3.Init.Prescaler = 839;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 9999;
+  htim3.Init.Period = 999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -226,7 +246,7 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_TIMING;
-  sConfigOC.Pulse = 4999;
+  sConfigOC.Pulse = 499;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
