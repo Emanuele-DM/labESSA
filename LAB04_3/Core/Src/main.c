@@ -147,14 +147,6 @@ int main(void)
   step_1 = SET; //initialize captured edge processing
   while (1)
   {
-	  //prints an error message if the user inputs a value other than the proposed ones
-	  //	  if (user_choice <0 || user_choice >3){
-	  //		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)ERROR_MSG, strlen(ERROR_MSG));
-	  //	  }
-	  //	  if (number_of_overflows != 0){
-	  //		  sprintf(msg, "Overflow number: %u\r\n", number_of_overflows);
-	  //		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-	  //	  }
 	  opt = readReceivedValue();
 	  if (opt > 0){
 		  processReceivedValue(opt);
@@ -406,7 +398,6 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM2){
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		if (TIM2->CCR1 == compare_value_high) {
 			TIM2->CCR1 = compare_value_low;
 		}
@@ -417,20 +408,15 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
 		captured_edge = RISING;
-//		sprintf(msg, "r %lu\r\n", TIM3->CCR1);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 	}
 	else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_RESET){
 		captured_edge = FALLING;
-//		sprintf(msg, "f %lu\r\n", TIM3->CCR1);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 	}
 	processCapturedEdge(captured_edge);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
 	if (htim->Instance == TIM3){
-//		if (capture_state == DONE) HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 		if (counting_overflows != 0) {
 			number_of_overflows++;
 			if (counting_fall_overflows != 0) number_of_overflows_fall++;
@@ -448,7 +434,6 @@ int8_t readReceivedValue(void){
 	return retVal;
 }
 void processReceivedValue(int8_t opt){
-	//	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 	switch (opt) {
 	case 1:
 		sprintf(msg, "Current frequency: %u\r\n", frequency);
@@ -474,7 +459,6 @@ void processReceivedValue(int8_t opt){
 		}
 		else TIM2->PSC = TIM2->PSC + 1000;
 		sprintf(msg, "Current PSC (post): %lu\r\n", TIM2->PSC);
-//		MX_TIM2_Init();
 		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 100);
 		break;
 	case 6:
@@ -483,60 +467,47 @@ void processReceivedValue(int8_t opt){
             compare_value_high = compare_value_low + 1;
         }
         break;
-//	default:
-//		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//		sprintf(msg, "Current opt: %u\r\n", opt);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-//		break;
 	}
 }
 
 void processCapturedEdge(uint8_t captured_edge){
 	if (captured_edge == RISING && step_1 == SET){
-		///////////////
 		step_1 = RESET;
-		cnt_1 = TIM3->CCR1;
-		processing = 1;
-		number_of_overflows = 0;
+		///////////////
+		cnt_1 = TIM3->CCR1; // count at first rising edge
+		number_of_overflows = 0; // reset the number of overflows
 		number_of_overflows_fall = 0;
-		counting_fall_overflows = 1;
-		counting_overflows= 1;
+		counting_fall_overflows = 1; // start counting overflows of TIM3 between cnt_1 and cnt_fall
+		counting_overflows= 1; // start counting overflows of TIM3 between cnt_1 and cnt_2
 		///////////////
 		step_2 = SET;
 	}
 	else if (captured_edge == FALLING && step_2 == SET){
 		step_2 = RESET;
 		///////////////
-		cnt_fall = TIM3->CCR1;
-		counting_fall_overflows = 0;
-		delta_fall = cnt_fall + number_of_overflows_fall*10000 - cnt_1;
+		cnt_fall = TIM3->CCR1; // count at falling edge
+		counting_fall_overflows = 0; // stop counting overflows
+		delta_fall = cnt_fall + number_of_overflows_fall*10000 - cnt_1; // # of timer ticks between cnt_fall and cnt_2
 		///////////////
 		step_3 = SET;
 	}
 	else if (captured_edge == RISING && step_3 == SET){
-		///////////////
 		step_3 = RESET;
-		cnt_2 = TIM3->CCR1;
-		counting_overflows = 0;
-		delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
-		frequency = 50*10000/delta_cnt;
-		if(min_frequency == 0) min_frequency = frequency;
-		if (frequency > max_frequency) max_frequency = frequency;
-		else if (frequency < min_frequency) min_frequency = frequency;
+		///////////////
+		cnt_2 = TIM3->CCR1; // count at second rising edge
+		counting_overflows = 0; // stop counting overflows
+		delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1; // # of ticks b/w cnt_1 and cnt_2
+		frequency = 50*10000/delta_cnt; // 50 is UEF of TIM3, 10000 is the period
+		if(min_frequency == 0) min_frequency = frequency; // initialize minimum frequency
+		if (frequency > max_frequency) max_frequency = frequency; // update max frequency
+		else if (frequency < min_frequency) min_frequency = frequency; // update min frequency
 		dutycycle = 100*delta_fall/delta_cnt;
-//		sprintf(msg, "r %u\r\n", dutycycle);
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-		processing = 0;
 		///////////////
 		step_1 = SET;
 	}
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-	//	read_buffer_new = 1;
-	//	  if(read_buffer_new == 1) {
-	//		  user_choice = atoi(readBuf);
-	//	  }
 	have_received_data = SET;
 }
 /* USER CODE END 4 */

@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="."/>
+		<item key="selection" value="processing"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="proces"/>
+			<item value="processing"/>
+			<item value="callback"/>
+			<item value="MA50_filtered_accelero_axes"/>
+			<item value="GPIO_PIN_5"/>
 			<item value="-&gt;"/>
+			<item value="."/>
+			<item value="MA5"/>
+			<item value="circular_buffer"/>
+			<item value="memset"/>
 			<item value="&amp;"/>
 			<item value="getaxes"/>
 			<item value="value"/>
 			<item value="vaue"/>
 			<item value="getvalue"/>
-			<item value="Init"/>
-			<item value="IKS01A3_MOTION_SENSOR_Init"/>
-			<item value="751"/>
-			<item value="s751"/>
-			<item value="stts751"/>
-			<item value="lps22h"/>
-			<item value="init"/>
-			<item value="hts221"/>
-			<item value="GetValue"/>
 		</list>
 		<list key="replacehistory">
+			<item value="IIRLP_filtered_accelero_axes"/>
 			<item value="."/>
+			<item value="-&gt;"/>
+			<item value="MA50"/>
+			<item value="circular_buffer_51"/>
 			<item value=""/>
 			<item value="Enable"/>
 			<item value="Start"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1016"/>
-		<item key="DIALOG_Y_ORIGIN" value="361"/>
+		<item key="DIALOG_X_ORIGIN" value="334"/>
+		<item key="DIALOG_Y_ORIGIN" value="385"/>
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

@@ -10705,3 +10705,504 @@ arm-none-eabi-size   LAB05_3.elf
   42412	    332	   2908	  45652	   b254	LAB05_3.elf
 Finished building: default.size.stdout
  
+15:18:40 **** Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42376	    332	   2900	  45608	   b228	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+15:20:26 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42376	    332	   2900	  45608	   b228	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+15:21:13 **** Build of configuration Debug for project LAB04_1 ****
+make -j12 all 
+arm-none-eabi-size   LAB04_1.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13824	    272	   1704	  15800	   3db8	LAB04_1.elf
+Finished building: default.size.stdout
+ 
+15:24:07 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42376	    332	   2900	  45608	   b228	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+16:45:55 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:144:72: warning: passing argument 3 of 'IKS01A3_MOTION_SENSOR_GetAxes' from incompatible pointer type [-Wincompatible-pointer-types]
+  144 |     IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer_51);
+      |                                                                        ^~~~~~~~~~~~~~~~~~~
+      |                                                                        |
+      |                                                                        IKS01A3_MOTION_SENSOR_Axes_t (*)[52] {aka struct <anonymous> (*)[52]}
+In file included from ../Core/Src/main.c:27:
+../Drivers/BSP/IKS01A3/iks01a3_motion_sensors.h:1081:107: note: expected 'IKS01A3_MOTION_SENSOR_Axes_t *' {aka 'struct <anonymous> *'} but argument is of type 'IKS01A3_MOTION_SENSOR_Axes_t (*)[52]' {aka 'struct <anonymous> (*)[52]'}
+ 1081 | int32_t IKS01A3_MOTION_SENSOR_GetAxes(uint32_t Instance, uint32_t Function, IKS01A3_MOTION_SENSOR_Axes_t *Axes);
+      |                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+../Core/Src/main.c:145:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  145 |     MA50_filtered_accelero_axes.x += circular_buffer_51[i].x - circular_buffer_51[0].x;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:145:57: error: 'i' undeclared (first use in this function)
+  145 |     MA50_filtered_accelero_axes.x += circular_buffer_51[i].x - circular_buffer_51[0].x;
+      |                                                         ^
+../Core/Src/main.c:145:57: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:146:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  146 |     MA50_filtered_accelero_axes.y += circular_buffer_51[i].y - circular_buffer_51[0].y;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:147:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  147 |     MA50_filtered_accelero_axes.z += circular_buffer_51[i].z - circular_buffer_51[0].z;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:149:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  149 |      MA50_filtered_accelero_axes.x /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:150:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  150 |      MA50_filtered_accelero_axes.y /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:151:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  151 |      MA50_filtered_accelero_axes.z /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:158:45: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                             ^
+      |                                             ->
+../Core/Src/main.c:158:76: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                            ^
+      |                                                                            ->
+../Core/Src/main.c:158:107: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                                                           ^
+      |                                                                                                           ->
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:46:45 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:145:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  145 |     MA50_filtered_accelero_axes.x += circular_buffer_51[51].x - circular_buffer_51[0].x;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:146:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  146 |     MA50_filtered_accelero_axes.y += circular_buffer_51[51].y - circular_buffer_51[0].y;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:147:32: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  147 |     MA50_filtered_accelero_axes.z += circular_buffer_51[51].z - circular_buffer_51[0].z;
+      |                                ^
+      |                                ->
+../Core/Src/main.c:149:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  149 |      MA50_filtered_accelero_axes.x /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:150:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  150 |      MA50_filtered_accelero_axes.y /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:151:33: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  151 |      MA50_filtered_accelero_axes.z /= 51;
+      |                                 ^
+      |                                 ->
+../Core/Src/main.c:158:45: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                             ^
+      |                                             ->
+../Core/Src/main.c:158:76: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                            ^
+      |                                                                            ->
+../Core/Src/main.c:158:107: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                                                           ^
+      |                                                                                                           ->
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:52:15 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:145:61: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  145 |     MA50_filtered_accelero_axes->x += circular_buffer_51[51]->x - circular_buffer_51[0]->x;
+      |                                                             ^~
+../Core/Src/main.c:145:88: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  145 |     MA50_filtered_accelero_axes->x += circular_buffer_51[51]->x - circular_buffer_51[0]->x;
+      |                                                                                        ^~
+../Core/Src/main.c:146:61: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  146 |     MA50_filtered_accelero_axes->y += circular_buffer_51[51]->y - circular_buffer_51[0]->y;
+      |                                                             ^~
+../Core/Src/main.c:146:88: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  146 |     MA50_filtered_accelero_axes->y += circular_buffer_51[51]->y - circular_buffer_51[0]->y;
+      |                                                                                        ^~
+../Core/Src/main.c:147:61: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  147 |     MA50_filtered_accelero_axes->z += circular_buffer_51[51]->z - circular_buffer_51[0]->z;
+      |                                                             ^~
+../Core/Src/main.c:147:88: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  147 |     MA50_filtered_accelero_axes->z += circular_buffer_51[51]->z - circular_buffer_51[0]->z;
+      |                                                                                        ^~
+../Core/Src/main.c:158:45: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                             ^
+      |                                             ->
+../Core/Src/main.c:158:76: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                            ^
+      |                                                                            ->
+../Core/Src/main.c:158:107: error: '(IKS01A3_MOTION_SENSOR_Axes_t *)&MA50_filtered_accelero_axes' is a pointer; did you mean to use '->'?
+  158 |      "Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
+      |                                                                                                           ^
+      |                                                                                                           ->
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:53:39 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:145:60: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  145 |     MA50_filtered_accelero_axes.x += circular_buffer_51[51]->x - circular_buffer_51[0]->x;
+      |                                                            ^~
+../Core/Src/main.c:145:87: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  145 |     MA50_filtered_accelero_axes.x += circular_buffer_51[51]->x - circular_buffer_51[0]->x;
+      |                                                                                       ^~
+../Core/Src/main.c:146:60: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  146 |     MA50_filtered_accelero_axes.y += circular_buffer_51[51]->y - circular_buffer_51[0]->y;
+      |                                                            ^~
+../Core/Src/main.c:146:87: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  146 |     MA50_filtered_accelero_axes.y += circular_buffer_51[51]->y - circular_buffer_51[0]->y;
+      |                                                                                       ^~
+../Core/Src/main.c:147:60: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  147 |     MA50_filtered_accelero_axes.z += circular_buffer_51[51]->z - circular_buffer_51[0]->z;
+      |                                                            ^~
+../Core/Src/main.c:147:87: error: invalid type argument of '->' (have 'IKS01A3_MOTION_SENSOR_Axes_t' {aka 'struct <anonymous>'})
+  147 |     MA50_filtered_accelero_axes.z += circular_buffer_51[51]->z - circular_buffer_51[0]->z;
+      |                                                                                       ^~
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j12 all" terminated with exit code 2. Build might be incomplete.
+16:54:03 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42380	    332	   2908	  45620	   b234	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+16:58:17 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42440	    332	   2908	  45680	   b270	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:00:38 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42444	    332	   2908	  45684	   b274	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:01:13 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42444	    332	   2908	  45684	   b274	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:02:46 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  39876	    232	   2880	  42988	   a7ec	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:03:42 **** Incremental Build of configuration Debug for project LAB04_1 ****
+make -j12 all 
+arm-none-eabi-size   LAB04_1.elf 
+   text	   data	    bss	    dec	    hex	filename
+  13824	    272	   1704	  15800	   3db8	LAB04_1.elf
+Finished building: default.size.stdout
+ 
+17:04:08 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-size   LAB05_3.elf 
+   text	   data	    bss	    dec	    hex	filename
+  39876	    232	   2880	  42988	   a7ec	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+17:06:37 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  39648	    232	   2880	  42760	   a708	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:06:58 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  39648	    232	   2880	  42760	   a708	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:07:15 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  39792	    232	   2880	  42904	   a798	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:08:13 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  39876	    232	   2880	  42988	   a7ec	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:08:46 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42388	    332	   2908	  45628	   b23c	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:09:47 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42396	    332	   2908	  45636	   b244	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+17:42:58 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42452	    332	   2908	  45692	   b27c	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+19:56:08 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42452	    332	   2908	  45692	   b27c	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+19:57:35 **** Incremental Build of configuration Debug for project LAB05_3 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_3.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_3\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_3.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_3.elf
+ 
+arm-none-eabi-size   LAB05_3.elf 
+arm-none-eabi-objdump -h -S  LAB05_3.elf  > "LAB05_3.list"
+arm-none-eabi-objcopy  -O binary  LAB05_3.elf  "LAB05_3.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42388	    332	   2908	  45628	   b23c	LAB05_3.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_3.bin
+ 
+Finished building: LAB05_3.list
+ 
+10:35:09 **** Build of configuration Debug for project LAB05_1 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_1\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_1.elf
+ 
+arm-none-eabi-size   LAB05_1.elf 
+arm-none-eabi-objdump -h -S  LAB05_1.elf  > "LAB05_1.list"
+arm-none-eabi-objcopy  -O binary  LAB05_1.elf  "LAB05_1.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42092	    332	   2220	  44644	   ae64	LAB05_1.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_1.bin
+ 
+Finished building: LAB05_1.list
+ 
+10:52:09 **** Incremental Build of configuration Debug for project LAB05_1 ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I../X-CUBE-MEMS1/Target -I../Drivers/BSP/Components/lsm6dso -I../Drivers/BSP/Components/lis2dw12 -I../Drivers/BSP/Components/lis2mdl -I../Drivers/BSP/Components/hts221 -I../Drivers/BSP/Components/lps22hh -I../Drivers/BSP/Components/stts751 -I../Drivers/BSP/IKS01A3 -I../Drivers/BSP/Components/Common -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "LAB05_1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\LAB05_1\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LAB05_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: LAB05_1.elf
+ 
+arm-none-eabi-size   LAB05_1.elf 
+arm-none-eabi-objdump -h -S  LAB05_1.elf  > "LAB05_1.list"
+arm-none-eabi-objcopy  -O binary  LAB05_1.elf  "LAB05_1.bin"
+   text	   data	    bss	    dec	    hex	filename
+  42180	    332	   2220	  44732	   aebc	LAB05_1.elf
+Finished building: default.size.stdout
+ 
+Finished building: LAB05_1.bin
+ 
+Finished building: LAB05_1.list
+ 

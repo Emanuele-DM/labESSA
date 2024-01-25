@@ -22,9 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
-#include "math.h"
-#include "iks01a3_motion_sensors.h"
+#include "stdio.h" // provides sprintf function
+#include "iks01a3_motion_sensors.h" // provides structures and function related to sensor
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,18 +116,11 @@ int main(void)
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &gyro_axes);
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &accelero_axes);
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2MDL_0, MOTION_MAGNETO, &magneto_axes);
-//		  transmitSensorData(&gyro_axes, "Gyro");
-//		  transmitSensorData(&accelero_axes, "Accelero");
-//		  transmitSensorData(&magneto_axes, "Magneto");
-//		  uint8_t length = sprintf(msg, ""
-//				  "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
-//		  			"Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
-//					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
-//					"Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
-//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
-		  uint8_t length = sprintf(msg, ""
-				  "%s X:%ld, Y:%ld, Z:%ld\n\r",
-					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z);
+		  uint8_t length = sprintf(msg,
+				  "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
+		  			"Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
+					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
+					"Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
 		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 	  }
     /* USER CODE END WHILE */
@@ -309,7 +301,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
 	time_to_read = 1;
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
 
 void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t *sensor_axes, const char *sensorName){
