@@ -46,8 +46,8 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-int volatile time_to_read = 0;
-char msg[110];
+int volatile time_to_read = 0; //global variable to be set periodically by TIM3
+char msg[110]; // character array that will hold the formatted data to transmit
 IKS01A3_MOTION_SENSOR_Axes_t accelero_axes;
 IKS01A3_MOTION_SENSOR_Axes_t magneto_axes;
 IKS01A3_MOTION_SENSOR_Axes_t gyro_axes;
@@ -59,7 +59,6 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
-void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t *sensorData, const char *sensorName);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -98,8 +97,8 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
-  IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO);
+  HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1); //start timer 3 in OC mode w/ interrupts
+  IKS01A3_MOTION_SENSOR_Init(IKS01A3_LSM6DSO_0, MOTION_GYRO); //initialize sensor LSM6DS0 as gyroscope
   IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
   IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2MDL_0, MOTION_MAGNETO);
   IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LSM6DSO_0, MOTION_GYRO);
@@ -111,19 +110,19 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if (time_to_read == 1){
+	  if (time_to_read == 1){ // global variable set by TIM3 every 500ms
 		  time_to_read = 0;
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LSM6DSO_0, MOTION_GYRO, &gyro_axes);
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &accelero_axes);
 		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2MDL_0, MOTION_MAGNETO, &magneto_axes);
-		  uint8_t length = sprintf(msg,
+		  uint8_t length = sprintf(msg, // formats data from the sensors into a string
 				  "%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r%s X:%ld, Y:%ld, Z:%ld\n\r",
-		  			"Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
-					"Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
-					"Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+				  "Gyro", gyro_axes.x, gyro_axes.y, gyro_axes.z,
+				  "Accelero", accelero_axes.x, accelero_axes.y, accelero_axes.z,
+				  "Magneto", magneto_axes.x, magneto_axes.y, magneto_axes.z);
+		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length); // transmits the string
 	  }
-    /* USER CODE END WHILE */
+	  /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -301,12 +300,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
 	time_to_read = 1;
-}
-
-void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t *sensor_axes, const char *sensorName){
-	uint8_t length = sprintf(msg, "%s X:%ld, Y:%ld, Z:%ld\n\r",
-			sensorName, sensor_axes->x, sensor_axes->y, sensor_axes->z);
-	HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 }
 /* USER CODE END 4 */
 

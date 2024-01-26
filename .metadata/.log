@@ -3263,3 +3263,36 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-25 16:58:26.157
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-01-25 21:58:11.861 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-01-25 21:58:16.165
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-01-25 21:58:16.222
+!MESSAGE Log4j initialized with config file C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-25 21:58:23.550
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-01-26 21:17:20.991 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=it_IT
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-01-26 21:17:31.646
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-01-26 21:17:31.717
+!MESSAGE Log4j initialized with config file C:\File\Uni\2023-2024 I\Electonic systems for sensor acquisition\lab\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-01-26 21:17:44.753
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-01-26 21:21:15.193
+!MESSAGE Indexed 'LAB03_4' (22 sources, 82 headers) in 3.22 sec: 4,730 declarations; 22,470 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0074%)
