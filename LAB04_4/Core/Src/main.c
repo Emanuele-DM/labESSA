@@ -108,12 +108,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // ready_to_send is set by the callback function of the ADC
+	  // when conversion has been completed, thus is signals there is a
+	  // new number ready to be transmitted
 	  if (ready_to_send == 1){
-//		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		  // reset the ready_to_send variable, so that
+		  // the same number is not transmitted multiple times
 		  ready_to_send = 0;
+		  // use of the sprintf function does two things:
+		  // - format the converted value into a string that will be transmitted
+		  // - assign the number of written characters to the variable length,
+		  //   so that we only transmit the part of msg array that contains the message
+		  //   we just created
 		  length = sprintf(msg, "Converted value: %u\r\n", converted_value);
+		  // transmit the formatted string
 		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
-//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)"Hello", strlen("Hello"));
 	  }
     /* USER CODE END WHILE */
 
@@ -343,11 +352,11 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback (ADC_HandleTypeDef * hadc){
-//	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	// write the converted value to converted_value
 	converted_value = HAL_ADC_GetValue(&hadc1);
+	// set ready_to_send variable
 	ready_to_send = 1;
 }
-
 /* USER CODE END 4 */
 
 /**

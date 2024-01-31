@@ -93,19 +93,18 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
+  // set the compare registers of the two timers
   TIM3->CCR1=30;
   TIM3->CCR2=1;
+  // start the two timers in output compare mode
+  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
+  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
-//		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
-//	  }
 	  if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC1) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC1);
 			if (TIM3->CCR1 == 80) {

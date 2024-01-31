@@ -103,7 +103,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if (button_pressed ==1){ // condition set by GPIO callback
+	  if (button_pressed ==1){ // condition set inside GPIO callback function
 		  button_pressed = 0; // reset the condition
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // toggle the LED
 		  HAL_Delay(500); // delay for debouncing

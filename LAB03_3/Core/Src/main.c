@@ -93,6 +93,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  // start the 3 timer channels in OC mode with interrupts
   HAL_TIM_OC_Start_IT(&htim3,TIM_CHANNEL_3);
   HAL_TIM_OC_Start_IT(&htim3,TIM_CHANNEL_2);
   HAL_TIM_OC_Start_IT(&htim3,TIM_CHANNEL_1);
@@ -298,18 +299,23 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-//void HAL_TIM_PeriodElapsedCallback (TIM_HandleTypeDef *htim) {
-//	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
-//}
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
+	// by checking htim->Channel we can perform different actions
+	// depending on the channel that has generated the interrupt
 	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3){
+		// toggle the pin on which we want the 250 Hz wave
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+		// for all three channels the same operation is performed:
+		// if CCRx is at its maximum, reset it to the base value
+		// otherwise increase it by a value s.t. the desired
+		// number of toggles is performed in a period
 		if (TIM3->CCR3 == 800) {
 			TIM3->CCR3 = 300;
 		}
 		else TIM3->CCR3 = 800;
 	}
 	else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
+		// toggle the pin on which we want the 500 Hz wave
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
 		if (TIM3->CCR2 == 900) {
 			TIM3->CCR2 = 150;
@@ -317,6 +323,7 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 		else TIM3->CCR2 = TIM3->CCR2 + 250;
 	}
 	else if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1){
+		// toggle the pin on which we want the 1 kHz wave
 		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
 		if (TIM3->CCR1 == 975) {
 			TIM3->CCR1 = 100;

@@ -93,23 +93,34 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
-  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
+  // set initial value of TIM3's channel x capture compare register
   TIM3->CCR1 = 49;
   TIM3->CCR2 = 10;
+  // start channel 1 of timer 3 in OC mode
+  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
+  // start channel 2 of timer 3 in OC mode
+  HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // TIM_FLAG_UPDATE is set when the timer overflows, thus when
+	  // its period has elapsed.
 	  if(__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_UPDATE) != RESET){
+		  // reset the flag
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_UPDATE);
+		  // toggle the pin of the 2.5 khz wave
 		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
+		  // toggle the pin of the 12.5khz wave if CCR2 is at its max
 		  if (TIM3->CCR2 == 90)
 			  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+		  // reset CCR2 to its initial value
 		  TIM3->CCR2 = 10;
 	  }
+	  // TIM_FLAG_CCx is set by the x channel of &htimY timer
+	  // thus when its value is != RESEt it means that a capture has happened
 	  else if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC1) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC1);
 		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_3);
@@ -117,8 +128,11 @@ int main(void)
 	  else if (__HAL_TIM_GET_FLAG(&htim3, TIM_FLAG_CC2) != RESET){
 		  __HAL_TIM_CLEAR_FLAG(&htim3, TIM_FLAG_CC2);
 		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-		  if (TIM3->CCR2 != 90)
-		  TIM3->CCR2 += 10;
+		  // if CCR2 is not at its maximum value
+		  if (TIM3->CCR2 != 90){
+			  // increase the value of CCR2 by 10
+			  TIM3->CCR2 += 10;
+		  }
 	  }
     /* USER CODE END WHILE */
 

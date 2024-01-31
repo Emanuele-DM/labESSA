@@ -39,9 +39,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/BSP/Components/lps22hh/lps22hh.h \
  ../Drivers/BSP/Components/lps22hh/lps22hh_reg.h \
  ../Drivers/BSP/Components/stts751/stts751.h \
- ../Drivers/BSP/Components/stts751/stts751_reg.h \
- ../Drivers/BSP/IKS01A3/iks01a3_env_sensors_ex.h \
- ../Drivers/BSP/IKS01A3/iks01a3_env_sensors.h
+ ../Drivers/BSP/Components/stts751/stts751_reg.h
 
 ../Core/Inc/main.h:
 
@@ -130,7 +128,3 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/BSP/Components/stts751/stts751.h:
 
 ../Drivers/BSP/Components/stts751/stts751_reg.h:
-
-../Drivers/BSP/IKS01A3/iks01a3_env_sensors_ex.h:
-
-../Drivers/BSP/IKS01A3/iks01a3_env_sensors.h:

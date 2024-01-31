@@ -23,7 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "math.h"
+//#include "math.h"
 #include "iks01a3_motion_sensors.h"
 /* USER CODE END Includes */
 
@@ -51,10 +51,9 @@ int volatile time_to_read = 0;
 char msg[100];
 IKS01A3_MOTION_SENSOR_Axes_t MA5_filtered_accelero_axes;
 IKS01A3_MOTION_SENSOR_Axes_t MA50_filtered_accelero_axes;
-IKS01A3_MOTION_SENSOR_Axes_t IIRLP_filtered_accelero_axes[2];
+IKS01A3_MOTION_SENSOR_Axes_t IIRLP_filtered_accelero_axes;
 IKS01A3_MOTION_SENSOR_Axes_t circular_buffer[5];
 IKS01A3_MOTION_SENSOR_Axes_t circular_buffer_51[52];
-uint8_t cnt = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,77 +101,103 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
+  // coefficients of the IIR LP filter
+  float b1 = 0.73;
+  float a0 = 1-b1;
+  // start TIM3, used to time reading of the data
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
+  // initialize and enable the accelerometer
   IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
   IKS01A3_MOTION_SENSOR_Enable(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);
-  MA5_filtered_accelero_axes.x = 0;
-  MA5_filtered_accelero_axes.y = 0;
-  MA5_filtered_accelero_axes.z = 0;
   for (int i = 0; i < 5; ++i) {
-      // Set the entire structure to zero
       memset(&circular_buffer[i], 0, sizeof(circular_buffer[i]));
   }
   for (int i = 0; i <= 51; ++i) {
-      // Set the entire structure to zero
       memset(&circular_buffer_51[i], 0, sizeof(circular_buffer_51[i]));
   }
-  MA50_filtered_accelero_axes.x = 0;
-  MA50_filtered_accelero_axes.y = 0;
-  MA50_filtered_accelero_axes.z = 0;
+  // initialize filtered axes to 0
   IIRLP_filtered_accelero_axes.x = 0;
   IIRLP_filtered_accelero_axes.y = 0;
   IIRLP_filtered_accelero_axes.z = 0;
-
+  MA50_filtered_accelero_axes.x = 0;
+  MA50_filtered_accelero_axes.y = 0;
+  MA50_filtered_accelero_axes.z = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if (time_to_read == 1){
-		  time_to_read = 0;
-		  if (cnt < 51) ++cnt;
+	  if (time_to_read == 1){ // set in TIM3's callback w/ f=100Hz
+		  time_to_read = 0; // reset the variable
+		  ////////////////////////////////////////////////
 		  // moving average FIR filter with 5 coefficients
-		  /*IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer[0]);
+		  ////////////////////////////////////////////////
+		  // initialize the filtered axes to 0
+		  memset(&MA5_filtered_accelero_axes, 0, sizeof(MA5_filtered_accelero_axes));
+		  // read the data from the sensor
+		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer[0]);
+		  // since we want the other filters to work on the same measurement, copy
+		  // the read values to the buffer used by the other filters
+		  memcpy(&circular_buffer_51[51], &circular_buffer[0], sizeof(circular_buffer[0]));
+		  // for each axis sum the 5 values inside the buffer
 		  for (int i = 0; i<5; ++i){
 			  MA5_filtered_accelero_axes.x += circular_buffer[i].x;
 			  MA5_filtered_accelero_axes.y += circular_buffer[i].y;
 			  MA5_filtered_accelero_axes.z += circular_buffer[i].z;
 		  }
+		  // and divide each axis by 5
 		  MA5_filtered_accelero_axes.x /= 5;
 		  MA5_filtered_accelero_axes.y /= 5;
 		  MA5_filtered_accelero_axes.z /= 5;
-		  uint8_t length = sprintf(msg, "%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r",
-		  			"Unfiltered", circular_buffer[0].x, circular_buffer[0].y, circular_buffer[0].z,
-					"Filtered", MA5_filtered_accelero_axes.x, MA5_filtered_accelero_axes.y, MA5_filtered_accelero_axes.z);
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+		  // shift the elements in the circular buffer to the right by one position
+		  // circular_buffer[0] is left as is since it's overwritten at the start
 		  for (int j = 4; j > 0; --j) {
 			  memcpy(&circular_buffer[j], &circular_buffer[j-1], sizeof(circular_buffer[j]));
 		  }
-		  memset(&MA5_filtered_accelero_axes, 0, sizeof(MA5_filtered_accelero_axes));*/
-		  // moving average FIR filter with 50 coefficients
-		  IKS01A3_MOTION_SENSOR_GetAxes(IKS01A3_LIS2DW12_0, MOTION_ACCELERO, &circular_buffer_51[51]);
-		  MA50_filtered_accelero_axes.x += circular_buffer_51[51].x - circular_buffer_51[0].x;
-		  MA50_filtered_accelero_axes.y += circular_buffer_51[51].y - circular_buffer_51[0].y;
-		  MA50_filtered_accelero_axes.z += circular_buffer_51[51].z - circular_buffer_51[0].z;
-		  if (cnt == 51){
-			  MA50_filtered_accelero_axes.x /= 51;
-			  MA50_filtered_accelero_axes.y /= 51;
-			  MA50_filtered_accelero_axes.z /= 51;
-//			  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		  }
+		  ////////////////////////////////////////////////
+		  // moving average FIR filter with 51 coefficients
+		  ////////////////////////////////////////////////
+		  // compute the filtered value of each axis
+		  MA50_filtered_accelero_axes.x = MA50_filtered_accelero_axes.x +
+				  circular_buffer_51[51].x/51 - circular_buffer_51[0].x/51;
+		  MA50_filtered_accelero_axes.y = MA50_filtered_accelero_axes.y +
+				  circular_buffer_51[51].y/51 - circular_buffer_51[0].y/51;
+		  MA50_filtered_accelero_axes.z = MA50_filtered_accelero_axes.z +
+				  circular_buffer_51[51].z/51 - circular_buffer_51[0].z/51;
+		  // shift the elements in the circular buffer left by one position
+		  // the last one is untouched since it is overwritten anyway
 		  for (int j = 0; j <= 50; ++j) {
-			  memcpy(&circular_buffer_51[j], &circular_buffer_51[j+1], sizeof(circular_buffer_51[j]));
+			  memcpy(&circular_buffer_51[j], &circular_buffer_51[j+1], sizeof(circular_buffer_51[j+1]));
 		  }
-		  uint8_t length = sprintf(msg, "%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r",
-		  			"Unfiltered", circular_buffer_51[26].x, circular_buffer_51[26].y, circular_buffer_51[26].z,
-					"Filtered", MA50_filtered_accelero_axes.x, MA50_filtered_accelero_axes.y, MA50_filtered_accelero_axes.z);
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
+		  ////////////////////////////////////////////////
 		  // IIR low pass filter
-		  IIRLP_filtered_accelero_axes.x = b1*IIRLP_filtered_accelero_axes*b1 + a0*circular_buffer_51[51];
-		  uint8_t length = sprintf(msg, "%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r",
-		  			"Unfiltered", circular_buffer_51[51].x, circular_buffer_51[51].y, circular_buffer_51[51].z,
-					"Filtered", IIRLP_filtered_accelero_axes.x, IIRLP_filtered_accelero_axes.y, IIRLP_filtered_accelero_axes.z);
+		  ////////////////////////////////////////////////
+		  // compute the filtered value of each axis as linear combination of previous filtered value
+		  // and current measured value
+		  IIRLP_filtered_accelero_axes.x = b1*IIRLP_filtered_accelero_axes.x + a0*circular_buffer_51[51].x;
+		  IIRLP_filtered_accelero_axes.y = b1*IIRLP_filtered_accelero_axes.y + a0*circular_buffer_51[51].y;
+		  IIRLP_filtered_accelero_axes.z = b1*IIRLP_filtered_accelero_axes.z + a0*circular_buffer_51[51].z;
+		  // format the string with unfiltered and the various filtered values
+		  uint8_t length = sprintf(msg,
+				  "%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r%s, %ld, %ld, %ld\n\r",
+				  "Raw",
+				  circular_buffer[0].x,
+				  circular_buffer[0].y,
+				  circular_buffer[0].z,
+				  "MA5",
+				  MA5_filtered_accelero_axes.x,
+				  MA5_filtered_accelero_axes.y,
+				  MA5_filtered_accelero_axes.z,
+				  "MA50",
+				  MA50_filtered_accelero_axes.x,
+				  MA50_filtered_accelero_axes.y,
+				  MA50_filtered_accelero_axes.z,
+				  "IIR",
+				  IIRLP_filtered_accelero_axes.x,
+				  IIRLP_filtered_accelero_axes.y,
+				  IIRLP_filtered_accelero_axes.z);
+		  // transmit the string
 		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 	  }
     /* USER CODE END WHILE */
@@ -353,14 +378,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
 	time_to_read = 1;
-//	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
-
-//void transmitSensorData(IKS01A3_MOTION_SENSOR_Axes_t sensor_axes, const char *sensorName){
-//	uint8_t length = sprintf(msg, "%s X:%ld, Y:%ld, Z:%ld\n\r",
-//			sensorName, sensor_axes.x, sensor_axes.y, sensor_axes.z);
-//	HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
-//}
 /* USER CODE END 4 */
 
 /**

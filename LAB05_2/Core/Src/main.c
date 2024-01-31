@@ -25,7 +25,6 @@
 #include "stdio.h"
 #include "math.h"
 #include "iks01a3_env_sensors.h"
-#include "iks01a3_env_sensors_ex.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,8 +47,15 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+// this variable will be set periodically
+// with the timer to read the data
 int volatile time_to_read = 0;
+// this character buffer will hold the
+// string to be transmitted
 char msg[30];
+// this variable will store the length of the string
+uint8_t length;
+// variables where sensor data will be written
 float humidity_value;
 float temperature_value;
 float pressure_value;
@@ -101,8 +107,10 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_TIM_OC_Start_IT(&htim3,TIM_CHANNEL_1);
+  // start the timer in OC mode with interrupts
   HAL_TIM_OC_Start_IT(&htim3, TIM_CHANNEL_1);
+  // repeated for each sensor:
+  // sensor is first initalized then enabled
   IKS01A3_ENV_SENSOR_Init(IKS01A3_HTS221_0, ENV_HUMIDITY);
   IKS01A3_ENV_SENSOR_Enable(IKS01A3_HTS221_0, ENV_HUMIDITY);
   IKS01A3_ENV_SENSOR_Init(IKS01A3_LPS22HH_0, ENV_PRESSURE);
@@ -115,17 +123,23 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // every 500ms the variable time_to_read is set to 1 by the timer's callback function
 	  if (time_to_read == 1) {
+		  // reset the variable
 		  time_to_read = 0;
+		  // read the value of each sensor and write it to the corresponding variable
 		  IKS01A3_ENV_SENSOR_GetValue(IKS01A3_HTS221_0, ENV_HUMIDITY, &humidity_value);
 		  IKS01A3_ENV_SENSOR_GetValue(IKS01A3_LPS22HH_0, ENV_PRESSURE, &pressure_value);
 		  IKS01A3_ENV_SENSOR_GetValue(IKS01A3_STTS751_0, ENV_TEMPERATURE, &temperature_value);
+		  // truncate the float values and convert to integer
 		  uint8_t truncated_humidity_value = (uint8_t) trunc(humidity_value);
-		  uint8_t truncated_pressure_value = (uint8_t) trunc(pressure_value);
+		  uint16_t truncated_pressure_value = (uint16_t) trunc(pressure_value);
 		  uint8_t truncated_temperature_value = (uint8_t) trunc(temperature_value);
-		  sprintf(msg, "h: %u p: %u t: %u \n\r", truncated_humidity_value, truncated_pressure_value, truncated_temperature_value);
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
-		  //HAL_UART_Transmit_IT(&huart2, tx_buff, 10);
+		  length = sprintf(msg, "h: %u p: %u t: %u \n\r",
+				  truncated_humidity_value,
+				  truncated_pressure_value,
+				  truncated_temperature_value);
+		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, length);
 	  }
     /* USER CODE END WHILE */
 
@@ -306,7 +320,6 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim){
 	time_to_read = 1;
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
 }
 /* USER CODE END 4 */
 

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +34,12 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define CAPTURING 0
+#define DONE 1
+#define NONE 0
+#define RISING 1
+#define FALLING 2
+#define MAX_COMPARE_VALUE 91
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,7 +54,38 @@ TIM_HandleTypeDef htim3;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+char msg[30];
+char receivedData[3];
+char test[] = "\rHo catturato qualcosa!\r\n";
+char msg_overflow[] = "\rOverflow!\r\n";
+volatile uint8_t number_of_overflows = 0;
+volatile uint8_t number_of_overflows_fall = 0;
+volatile uint8_t captured_edge = 0;
+volatile uint16_t cnt_1 = 0;
+volatile uint16_t cnt_2 = 0;
+volatile uint16_t cnt_fall = 0;
+volatile uint16_t delta_cnt = 0;
+volatile uint8_t processing = 0;
+volatile uint16_t delta_fall = 0;
+volatile uint16_t frequency;
+volatile uint8_t max_frequency = 0;
+volatile uint8_t min_frequency = 0;
+volatile uint8_t dutycycle;
+volatile uint8_t read_buffer_new = 0;
+volatile uint8_t counting_fall_overflows = 0;
+volatile uint8_t counting_overflows = 0;
+volatile uint8_t variables_reset = 0;
+volatile uint8_t have_received_data = 0;
+volatile int8_t opt = 0;
+volatile uint8_t step_1 = RESET;
+volatile uint8_t step_2 = RESET;
+volatile uint8_t step_3 = RESET;
+volatile uint8_t compare_value_low = 1;
+volatile uint8_t compare_value_high = 11;
+uint32_t new_prescaler_value = 4199;
+char readBuf[1];
+char msg[30];
+volatile uint8_t user_choice = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -56,7 +95,9 @@ static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
-
+void processReceivedValue(int8_t opt);
+int8_t readReceivedValue(void);
+void processCapturedEdge(uint8_t edge_type);//
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -71,7 +112,7 @@ static void MX_TIM3_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	char hello[] = "\rSuccede qualcosa!\r\n";
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -96,19 +137,22 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  TIM2->CCR1 = 300;
-  HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
-//  HAL_TIM_IC_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_OC_Start_IT(&htim2,TIM_CHANNEL_1);
+  HAL_TIM_IC_Start_IT(&htim3,TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1); //initialize reception
+  step_1 = SET; //initialize captured edge processing
   while (1)
   {
-    /* USER CODE END WHILE */
-	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
-		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)hello, strlen(hello));
+	  opt = readReceivedValue();
+	  if (opt > 0){
+		  processReceivedValue(opt);
 	  }
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -178,9 +222,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 839;
+  htim2.Init.Prescaler = 8399;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 999;
+  htim2.Init.Period = 99;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -211,7 +255,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM2_Init 2 */
-
+//  htim2.Init.Prescaler = new_prescaler_value;
   /* USER CODE END TIM2_Init 2 */
 
 }
@@ -225,7 +269,7 @@ static void MX_TIM3_Init(void)
 {
 
   /* USER CODE BEGIN TIM3_Init 0 */
-
+//	__HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 0 */
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -233,12 +277,12 @@ static void MX_TIM3_Init(void)
   TIM_IC_InitTypeDef sConfigIC = {0};
 
   /* USER CODE BEGIN TIM3_Init 1 */
-
+//  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 0;
+  htim3.Init.Prescaler = 167;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim3.Init.Period = 65535;
+  htim3.Init.Period = 9999;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
@@ -260,7 +304,7 @@ static void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
-  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
+  sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_BOTHEDGE;
   sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
   sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
   sConfigIC.ICFilter = 0;
@@ -269,7 +313,8 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
-
+  //Enables the TIM_IT_UPDATE interrupt -> enables PeriodElapsed callback
+  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 2 */
 
 }
@@ -325,6 +370,9 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SQUARE_WAVE_GPIO_Port, SQUARE_WAVE_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
@@ -338,20 +386,130 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : SQUARE_WAVE_Pin */
+  GPIO_InitStruct.Pin = SQUARE_WAVE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SQUARE_WAVE_GPIO_Port, &GPIO_InitStruct);
+
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) {
+//callback function associated to output compare's capture event
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef * htim) {
 	if (htim->Instance == TIM2){
-		//if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2){
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_6); // Toggle the pin being capture by TIM3's IC
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5); // Toggle the LED for visual verification of frequency and duty cycle
-//		HAL_UART_Transmit_IT(&huart2, (uint8_t*)test, strlen(test));
-		if (TIM2->CCR1 == 400) {
-			TIM2->CCR1 = 300;
+		// toggle the pin where the square wave is to be generated
+		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+		// we want two capture events per period of the timer
+		if (TIM2->CCR1 == compare_value_high) {
+			TIM2->CCR1 = compare_value_low;
 		}
-		else TIM2->CCR1 = 400;
+		else TIM2->CCR1 = compare_value_high;
 	}
+}
+//callback function associated to input capture
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim){
+	// if the pin is high after the compare event,
+	// it means the latest capture edge was rising
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_SET){
+		captured_edge = RISING;
+	}
+	// if it is low, then it's a falling edge
+	else if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6) == GPIO_PIN_RESET){
+		captured_edge = FALLING;
+	}
+	// function that computes frequency and duty cycle
+	processCapturedEdge(captured_edge);
+}
+
+// this function is used to count the number of overflows that occur
+// between edges
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim){
+	if (htim->Instance == TIM3){
+		// if counting_overflows is 1, increase the count of overflows
+		// between cnt_1 and cnt_2 every time this function is called
+		// also increase the number of overflows between cnt_1 and cnt_fall
+		// is counting_fall_overflows is 1
+		if (counting_overflows != 0) {
+			number_of_overflows++;
+			if (counting_fall_overflows != 0) number_of_overflows_fall++;
+		}
+	}
+}
+
+int8_t readReceivedValue(void){
+	int8_t retVal = -1;
+	if (have_received_data == SET){
+		have_received_data = RESET;
+		  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
+		  retVal = atoi(readBuf);
+	}
+	return retVal;
+}
+void processReceivedValue(int8_t opt){
+	// based on the value passed by the user via UART,
+	// transmit either frequency or duty cycle
+	switch (opt) {
+	case 1:
+		sprintf(msg, "Current frequency: %u\r\n", frequency);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		break;
+	case 2:
+		sprintf(msg, "Current duty cycle: %u\r\n", dutycycle);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
+		break;
+	}
+}
+// to determine frequency and duty cycle, we need 3 captures:
+// first rising edge, second rising edge, falling edge in between
+// we have implemented this as a 3-step process:
+void processCapturedEdge(uint8_t captured_edge){
+	// in the first step the captured value is assigned to cnt_1
+	// and we start counting overflows
+	if (captured_edge == RISING && step_1 == SET){
+		step_1 = RESET;
+		///////////////
+		cnt_1 = TIM3->CCR1; // count at first rising edge
+		number_of_overflows = 0; // reset the number of overflows
+		number_of_overflows_fall = 0;
+		counting_fall_overflows = 1; // count overflows of TIM3 btw cnt_1 and cnt_fall
+		counting_overflows= 1; // start counting overflows of TIM3 between cnt_1 and cnt_2
+		///////////////
+		step_2 = SET;
+	}
+	// in the second step the captured value is assigned to cnt_fall
+	else if (captured_edge == FALLING && step_2 == SET){
+		step_2 = RESET;
+		///////////////
+		cnt_fall = TIM3->CCR1; // count at falling edge
+		counting_fall_overflows = 0; // stop counting overflows
+		// delta_fall = # of timer ticks between cnt_fall and cnt_2
+		delta_fall = cnt_fall + number_of_overflows_fall*10000 - cnt_1;
+		///////////////
+		step_3 = SET;
+	}
+	// in the third step the captured value is assigned to cnt_2,
+	// then frequency and duty cycle are calculated
+	else if (captured_edge == RISING && step_3 == SET){
+		step_3 = RESET;
+		///////////////
+		cnt_2 = TIM3->CCR1; // count at second rising edge
+		counting_overflows = 0; // stop counting overflows
+		// delta_cnt = # of timer ticks b/w cnt_1 and cnt_2
+		delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
+		frequency = 50*10000/delta_cnt; // 50 is UEF of TIM3, 10000 is the period
+		dutycycle = 100*delta_fall/delta_cnt;
+		///////////////
+		step_1 = SET;
+	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	// this variable is used in the ReadReceivedValue function
+	// to prevent reading the content of the receive buffer
+	// over and over again
+	have_received_data = SET;
 }
 /* USER CODE END 4 */
 

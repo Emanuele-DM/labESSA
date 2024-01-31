@@ -44,15 +44,21 @@
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
-uint8_t Feedback[] = "\r\nData sent!\r\n";
-char WELCOME_MSG[] = "\r\nBuongiorno mondo!\r\n";
-char MENU[] = "\r\nPremere [1] per commutare il LED verde, [2] per restituire lo stato del pulsante blu, [3] per ristampare questo menu.\r\n";
+// welcome message
+char WELCOME_MSG[] = "\r\nHello, user.\r\n";
+// menu
+char MENU[] = "\r\nPress [1] to toggle the green LED, [2] to return the status of the pushbutton, [3] to print this menu again.\r\n";
+// prompt
 char PROMPT[] = ">";
+// read buffer
 char readBuf[1];
-char ERROR_MSG[] = "Please insert a valid number.\r\n";
+// character array where the messages to be transmitted will be written
 char msg[30];
-volatile uint8_t user_choice = 10;
+// variable to which the user input will be assigned
+volatile uint8_t user_choice = 0;
+// variable signaling there is a new value in the rx buffer
 volatile uint8_t read_buffer_new = 0;
+// variable that signals whether data transmission has finished
 volatile uint8_t ready_to_tx = 0;
 /* USER CODE END PV */
 
@@ -97,47 +103,66 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  ready_to_tx = 0;
+  // transmit the welcome message
   HAL_UART_Transmit_IT(&huart2, (uint8_t*)WELCOME_MSG, strlen(WELCOME_MSG));
-  HAL_Delay(1000);
+  // wait for the transmission to end
+  while(ready_to_tx != 1);
+  // reset the ready_to_tx variable
+  ready_to_tx = 0;
+  // transmit the menu
   HAL_UART_Transmit_IT(&huart2, (uint8_t*)MENU, strlen(MENU));
-  HAL_Delay(1000);
+  // wait for transmission to end
+  while(ready_to_tx != 1);
+  ready_to_tx = 0;
   HAL_UART_Transmit_IT(&huart2, (uint8_t*)PROMPT, strlen(PROMPT));
+  while(ready_to_tx != 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // initialize data reception and write received data to readBuf
 	  HAL_UART_Receive_IT(&huart2, (uint8_t*)readBuf, 1);
+	  // if there is new data in the read buffer
 	  if(read_buffer_new == 1) {
+		  // convert the character to an integer and assign it to user_choice variable
 		  user_choice = atoi(readBuf);
 	  }
-	  //prints an error message if the user inputs a value other than the proposed ones
-	  //	  if (user_choice <0 || user_choice >3){
-//		  HAL_UART_Transmit_IT(&huart2, (uint8_t*)ERROR_MSG, strlen(ERROR_MSG));
-//	  }
 	  if (user_choice > 0){
+		  // based on value of user_choice perform different actions
 		  switch(user_choice){
 			  case 1:
+				  // toggle the pin
 				  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+				  // set read_buffer_new to 0 signaling that there is no unread data
 				  read_buffer_new = 0;
+				  // reset user_choie so the action will not be performed infinitely
 				  user_choice = 0;
 				  break;
 			  case 2:
+				  // format the message with the button status to transmit back to the user
 				  sprintf(msg, "\r\nUSER BUTTON STATUS: %s",
+						  // use the ReadPin function to get the status of the pin
+						  // condition is written with the ternary operator for compactness
 						  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET ? "PRESSED" : "RELEASED");
+				  // transmit the formatted message
 				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 				  read_buffer_new = 0;
 				  user_choice = 0;
 				  break;
 			  case 3:
+				  ready_to_tx = 0;
+				  // transmit the menu
 				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)MENU, strlen(MENU));
-				  HAL_Delay(1000);
+				  // wait for end of transmission
+				  while(ready_to_tx != 1);
+				  // transmit the prompt
 				  HAL_UART_Transmit_IT(&huart2, (uint8_t*)PROMPT, strlen(PROMPT));
 				  user_choice = 0;
 				  read_buffer_new = 0;
 				  break;
-			  //default:
 		  }
 	  }
     /* USER CODE END WHILE */
@@ -258,9 +283,11 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+	// new data has been written to the received data buffer
 	read_buffer_new = 1;
 }
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+	// transfer complete
 	ready_to_tx = 1;
 }
 /* USER CODE END 4 */

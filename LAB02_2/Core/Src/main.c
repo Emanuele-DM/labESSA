@@ -43,7 +43,7 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint16_t period = 4000;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,7 +89,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  uint16_t period = 2000; // period [ms]
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -102,13 +102,13 @@ int main(void)
 	  HAL_Delay(period);
 	  // if the user button is pressed
 	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET){
+		  // delay for debouncing
+		  HAL_Delay(100);
 		  // if frequency is at its maximum value reset it to minimum value
-		  if (period < 2) period = 4000;
-		  // otherwise halven the period
+		  if (period < 2) period = 2000;
+		  // otherwise halven the period, doubling the frequency
 		  else period /= 2;
 	  }
-	  // delay to debounce the button
-	  HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

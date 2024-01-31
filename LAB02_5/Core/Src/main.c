@@ -96,10 +96,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  // generate a 500hz square wave
+	  // Toggle the pin
 	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10);
-	  // 1ms delay
-	  HAL_Delay(0.5);
+	  // 1ms delay between toggles -> freq = 500 Hz
+	  HAL_Delay(1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

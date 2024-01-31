@@ -313,7 +313,8 @@ static void MX_TIM3_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM3_Init 2 */
-  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE); //Enables the TIM_IT_UPDATE interrupt -> enables PeriodElapsed callback
+  //Enables the TIM_IT_UPDATE interrupt -> enables PeriodElapsed callback
+  __HAL_TIM_ENABLE_IT(&htim3, TIM_IT_UPDATE);
   /* USER CODE END TIM3_Init 2 */
 
 }
@@ -452,16 +453,18 @@ void processReceivedValue(int8_t opt){
 		HAL_UART_Transmit_IT(&huart2, (uint8_t*)msg, strlen(msg));
 		break;
 	case 5:
-		sprintf(msg, "Current PSC (pre): %lu\r\n", TIM2->PSC);
-		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 100);
+		// update the value of TIM2's prescaler,
+		// changing the frequency from 50 to 200 Hz
 		if (TIM2->PSC > 15799){
 			TIM2->PSC = 4199;
 		}
-		else TIM2->PSC = TIM2->PSC + 1000;
-		sprintf(msg, "Current PSC (post): %lu\r\n", TIM2->PSC);
-		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 100);
+		else TIM2->PSC += 1000;
 		break;
 	case 6:
+		// increase the value at which the second compare event
+		// that drives the generation of the square wave happens,
+		// increasing the duty cycle.
+		// once it reaches the maximum reset it to the minimum
         compare_value_high += 5;
         if (compare_value_high > MAX_COMPARE_VALUE) {
             compare_value_high = compare_value_low + 1;
@@ -496,11 +499,16 @@ void processCapturedEdge(uint8_t captured_edge){
 		///////////////
 		cnt_2 = TIM3->CCR1; // count at second rising edge
 		counting_overflows = 0; // stop counting overflows
-		delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1; // # of ticks b/w cnt_1 and cnt_2
-		frequency = 50*10000/delta_cnt; // 50 is UEF of TIM3, 10000 is the period
-		if(min_frequency == 0) min_frequency = frequency; // initialize minimum frequency
-		if (frequency > max_frequency) max_frequency = frequency; // update max frequency
-		else if (frequency < min_frequency) min_frequency = frequency; // update min frequency
+		// # of ticks b/w cnt_1 and cnt_2
+		delta_cnt = cnt_2 + number_of_overflows*10000 - cnt_1;
+		// 50 is UEF of TIM3, 10000 is the period
+		frequency = 50*10000/delta_cnt;
+		// initialize minimum frequency
+		if(min_frequency == 0) min_frequency = frequency;
+		// update max frequency
+		if (frequency > max_frequency) max_frequency = frequency;
+		// update min frequency
+		else if (frequency < min_frequency) min_frequency = frequency;
 		dutycycle = 100*delta_fall/delta_cnt;
 		///////////////
 		step_1 = SET;

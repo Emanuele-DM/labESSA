@@ -95,8 +95,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  // if the pin corresponding to user button is pressed
 	  if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_RESET){
+		  // toggle the pin connected to the LED
 		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		  // wait 250ms to prevent bouncing
 		  HAL_Delay(250);
 	  }
     /* USER CODE END WHILE */
